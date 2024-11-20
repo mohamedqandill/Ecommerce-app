@@ -14,6 +14,7 @@ dependencies:
   flutter_screenutil:
   flutter_slidable:
   auto_size_text:
+  bloc:
   colornames:
   flutter_svg:
   flutter_native_splash:
@@ -22,6 +23,7 @@ dependencies:
   dio:
   flutter_bloc:
   toastification:
+  dartz:
   shared_preferences:
 
 dev_dependencies:
