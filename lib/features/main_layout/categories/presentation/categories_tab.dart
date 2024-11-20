@@ -1,7 +1,11 @@
+import 'package:ecommerce_app/core/resources/enums.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
+import 'package:ecommerce_app/features/main_layout/categories/presentation/bloc/category_bloc.dart';
 import 'package:ecommerce_app/features/main_layout/categories/presentation/widgets/categories_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../di.dart';
 import 'widgets/sub_categories_list.dart';
 
 class CategoriesTab extends StatelessWidget {
@@ -9,17 +13,45 @@ class CategoriesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: AppPadding.p12, vertical: AppPadding.p12),
-      child: Row(
-        children: [
-          CategoriesList(),
-          SizedBox(
-            width: AppSize.s16,
-          ),
-          SubCategoriesList()
-        ],
+    return BlocProvider(
+      create: (context) => getIt<CategoryBloc>()..add(GetCategoriesEvent()),
+      child: BlocConsumer<CategoryBloc,CategoryState>(
+        builder: (context, state) {
+          return   Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: AppPadding.p12, vertical: AppPadding.p12),
+            child: Row(
+              children: [
+                CategoriesList(
+                  categoryModel: state.categoryModel,
+                ),
+                SizedBox(
+                  width: AppSize.s16,
+                ),
+                SubCategoriesList(subCategory: state.subCategoryModel,)
+              ],
+            ),
+          );
+        },
+        listener: (context, state) {
+          // if(state.getCategoriesState==RequestState.success){
+          //   Navigator.pop(context);
+          // }
+          // if(state.getCategoriesState==RequestState.loading){
+          //   showDialog
+          //     (
+          //     context: context, builder: (context) {
+          //     return AlertDialog(
+          //       backgroundColor: Colors.transparent,
+          //       content: Center(
+          //         child: CircularProgressIndicator(color: Colors.blue,),
+          //       ),
+          //     );
+          //   },);
+          // }
+
+        },
+
       ),
     );
   }

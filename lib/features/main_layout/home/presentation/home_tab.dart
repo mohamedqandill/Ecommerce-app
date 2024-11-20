@@ -1,9 +1,18 @@
 import 'dart:async';
+import 'package:ecommerce_app/core/apis/api_manager.dart';
+import 'package:ecommerce_app/core/resources/enums.dart';
+import 'package:ecommerce_app/di.dart';
+
 import 'package:ecommerce_app/features/main_layout/home/presentation/widgets/custom_category_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/resources/assets_manager.dart';
+import '../data/data_source/home_data_source_imp.dart';
+import '../data/repo/home_repo_imp.dart';
+import '../domain/use_case/get_category_use_Case.dart';
+import 'bloc/home_bloc.dart';
 import 'widgets/custom_ads_widget.dart';
 import 'widgets/custom_section_bar.dart';
 
@@ -46,73 +55,100 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          CustomAdsWidget(
-            adsImages: adsImages,
-            currentIndex: _currentIndex,
-            timer: _timer,
-          ),
-          Column(
-            children: [
-              CustomSectionBar(sectionNname: 'Categories', function: () {}),
-              SizedBox(
-                height: 270.h,
-                child: GridView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return const CustomCategoryWidget();
-                  },
-                  itemCount: 20,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
+    return BlocProvider(
+      create: (context) =>
+      getIt<HomeBloc>()
+        ..add(GetCategoryEvent()),
+      child: BlocConsumer<HomeBloc, HomeState>(
+        listener: (context, state) {
+          if(state.getCategoryState==RequestState.success){
+            Navigator.pop(context);
+          }
+          if(state.getCategoryState==RequestState.loading){
+           showDialog(context: context, builder: (context) {
+             return Center(child: CircularProgressIndicator(
+               color: Colors.blue,
+               backgroundColor: Colors.transparent,
+
+             ),);
+           },);
+          }
+        },
+        builder: (context, state) {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                CustomAdsWidget(
+                  adsImages: adsImages,
+                  currentIndex: _currentIndex,
+                  timer: _timer,
                 ),
-              ),
-              // SizedBox(height: 12.h),
-              // CustomSectionBar(sectionNname: 'Brands', function: () {}),
-              // SizedBox(
-              //   height: 270.h,
-              //   child: GridView.builder(
-              //     scrollDirection: Axis.horizontal,
-              //     itemBuilder: (context, index) {
-              //       return const CustomBrandWidget();
-              //     },
-              //     itemCount: 20,
-              //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //       crossAxisCount: 2,
-              //     ),
-              //   ),
-              // ),
-              // CustomSectionBar(
-              //   sectionNname: 'Most Selling Products',
-              //   function: () {},
-              // ),
-              // SizedBox(
-              //   child: SizedBox(
-              //     height: 360.h,
-              //     child: ListView.builder(
-              //       scrollDirection: Axis.horizontal,
-              //       itemBuilder: (context, index) {
-              //         return const ProductCard(
-              //           title: "Nike Air Jordon",
-              //           description:
-              //               "Nike is a multinational corporation that designs, develops, and sells athletic footwear ,apparel, and accessories",
-              //           rating: 4.5,
-              //           price: 1100,
-              //           priceBeforeDiscound: 1500,
-              //           image: ImageAssets.categoryHomeImage,
-              //         );
-              //       },
-              //       itemCount: 20,
-              //     ),
-              //   ),
-              // ),
-              SizedBox(height: 12.h),
-            ],
-          )
-        ],
+                Column(
+                  children: [
+                    CustomSectionBar(
+                        sectionNname: 'Categories', function: () {}),
+                    SizedBox(
+                      height: 270.h,
+                      child: GridView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+
+                          return  CustomCategoryWidget(
+                            categoryModel: state.categoryModel!.data![index],
+                          );
+                        },
+                        itemCount: state.categoryModel?.data?.length??0,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
+                      ),
+                    ),
+                    // SizedBox(height: 12.h),
+                    // CustomSectionBar(sectionNname: 'Brands', function: () {}),
+                    // SizedBox(
+                    //   height: 270.h,
+                    //   child: GridView.builder(
+                    //     scrollDirection: Axis.horizontal,
+                    //     itemBuilder: (context, index) {
+                    //       return const CustomBrandWidget();
+                    //     },
+                    //     itemCount: 20,
+                    //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    //       crossAxisCount: 2,
+                    //     ),
+                    //   ),
+                    // ),
+                    // CustomSectionBar(
+                    //   sectionNname: 'Most Selling Products',
+                    //   function: () {},
+                    // ),
+                    // SizedBox(
+                    //   child: SizedBox(
+                    //     height: 360.h,
+                    //     child: ListView.builder(
+                    //       scrollDirection: Axis.horizontal,
+                    //       itemBuilder: (context, index) {
+                    //         return const ProductCard(
+                    //           title: "Nike Air Jordon",
+                    //           description:
+                    //               "Nike is a multinational corporation that designs, develops, and sells athletic footwear ,apparel, and accessories",
+                    //           rating: 4.5,
+                    //           price: 1100,
+                    //           priceBeforeDiscound: 1500,
+                    //           image: ImageAssets.categoryHomeImage,
+                    //         );
+                    //       },
+                    //       itemCount: 20,
+                    //     ),
+                    //   ),
+                    // ),
+                    SizedBox(height: 12.h),
+                  ],
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
   }

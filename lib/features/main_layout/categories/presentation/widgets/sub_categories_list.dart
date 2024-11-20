@@ -4,12 +4,14 @@ import 'package:ecommerce_app/core/resources/font_manager.dart';
 import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
 import 'package:ecommerce_app/features/main_layout/categories/presentation/widgets/category_card_item.dart';
+import 'package:ecommerce_app/features/main_layout/home/data/models/CategoryModel.dart';
 import 'package:flutter/material.dart';
 
 import 'sub_category_item.dart';
 
 class SubCategoriesList extends StatelessWidget {
-  const SubCategoriesList({super.key});
+  CategoryModel? subCategory;
+   SubCategoriesList({required this.subCategory,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +35,10 @@ class SubCategoriesList extends StatelessWidget {
           // the grid view of the subcategories
           SliverGrid(
               delegate: SliverChildBuilderDelegate(
-                childCount: 26,
+                childCount: subCategory?.data?.length??0,
                 (context, index) => SubCategoryItem(
-                    'Watches',
-                    ImageAssets.subcategoryCardImage,
+                   title: subCategory?.data?[index].name?.split(" ").first??"",
+                    image: ImageAssets.productImage,
                     goToCategoryProductsListScreen),
               ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

@@ -1,10 +1,14 @@
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
+import 'package:ecommerce_app/features/main_layout/categories/presentation/bloc/category_bloc.dart';
 import 'package:ecommerce_app/features/main_layout/categories/presentation/widgets/category_item.dart';
+import 'package:ecommerce_app/features/main_layout/home/data/models/CategoryModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CategoriesList extends StatefulWidget {
-  const CategoriesList({super.key});
+  CategoryModel? categoryModel;
+   CategoriesList({required this.categoryModel,super.key});
 
   @override
   State<CategoriesList> createState() => _CategoriesListState();
@@ -45,9 +49,9 @@ class _CategoriesListState extends State<CategoriesList> {
           bottomLeft: Radius.circular(AppSize.s12),
         ),
         child: ListView.builder(
-          itemCount: 20,
+          itemCount: widget.categoryModel?.data?.length??0,
           itemBuilder: (context, index) => CategoryItem(index,
-              "Laptops & Electronics", selectedIndex == index, onItemClick),
+              widget.categoryModel?.data?[index].name??"", selectedIndex == index, onItemClick),
         ),
       ),
     ));
@@ -57,6 +61,7 @@ class _CategoriesListState extends State<CategoriesList> {
   onItemClick(int index) {
     setState(() {
       selectedIndex = index;
+      BlocProvider.of<CategoryBloc>(context).add(GetSubCategoriesEvent(widget.categoryModel?.data?[index].id??""));
     });
   }
 }

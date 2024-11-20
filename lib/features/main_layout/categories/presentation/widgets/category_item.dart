@@ -29,7 +29,7 @@ class CategoryItem extends StatelessWidget {
             Visibility(
               visible: isSelected,
               child: Container(
-                width: AppSize.s8,
+                width: AppSize.s10,
                 height: AppSize.s60,
                 decoration: BoxDecoration(
                   color: ColorManager.primary,

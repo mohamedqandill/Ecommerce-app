@@ -8,7 +8,7 @@ class SubCategoryItem extends StatelessWidget {
   final String title;
   final String image;
   final Function navigation;
-  const SubCategoryItem(this.title, this.image, this.navigation, {super.key});
+  const SubCategoryItem( this.navigation, {required this.title, required this.image,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,8 @@ class SubCategoryItem extends StatelessWidget {
           Text(
             title,
             style: getRegularStyle(color: ColorManager.primary),
-          )
+          ),
+          SizedBox(height: 5,),
         ],
       ),
     );

@@ -51,7 +51,7 @@ class CustomProductWidget extends StatelessWidget {
       onTap: () => Navigator.pushNamed(context, Routes.productDetails),
       child: Container(
         width: width * 0.4,
-        height: height * 0.3,
+        height: height * 0.8,
         decoration: BoxDecoration(
           border: Border.all(
             color: ColorManager.primary.withOpacity(0.3),
@@ -85,7 +85,7 @@ class CustomProductWidget extends StatelessWidget {
                   ClipRRect(
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(14.r)),
-                    child: Image.asset(
+                    child: Image.network(
                       image,
                       fit: BoxFit.cover,
                       width: width,
@@ -122,7 +122,7 @@ class CustomProductWidget extends StatelessWidget {
                     ),
                     SizedBox(height: height * 0.01),
                     SizedBox(
-                      width: width * 0.3,
+                      width: width * 0.4,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
