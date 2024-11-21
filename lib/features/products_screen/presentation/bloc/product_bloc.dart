@@ -15,14 +15,14 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   ProductBloc(this.getProductUseCase) : super(const ProductState.initial()) {
     on<GetProductsEvent>((event, emit)async {
       emit(state.copyWith(
-          productModel: null,
-          errorMessage: "",
+
+
           getProductState: RequestState.loading));
       var result = await getProductUseCase.call(event.id);
       result.fold(
             (l) {
           emit(state.copyWith(
-              productModel: null,
+
               errorMessage: l.toString(),
               getProductState: RequestState.error));
 
@@ -30,7 +30,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
             (r) {
           emit(state.copyWith(
               productModel: r,
-              errorMessage: "",
               getProductState: RequestState.success));
 
         },

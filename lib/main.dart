@@ -14,8 +14,9 @@ void main()async {
   Bloc.observer = MyBlocObserver();
   configureDependencies();
    await CacheHelper.init();
- Future<String?> token= CacheHelper.getData<String>("token");
- print(token.toString());
+ String? token= CacheHelper.getData<String>("token");
+ print(token);
+ print(token);
   runApp( MainApp(
     isLogged: token == null?false:true,
   ));
@@ -36,7 +37,7 @@ class MainApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: child,
         onGenerateRoute: RouteGenerator.getRoute,
-        initialRoute:!isLogged? Routes.signInRoute:Routes.mainRoute,
+        initialRoute: isLogged?Routes.mainRoute:Routes.signInRoute,
       ),
     );
   }

@@ -18,14 +18,13 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   CategoryBloc(this.getCategoryUseCase,this.getSubCategoryUseCase) : super(const CategoryState.initial()) {
     on<GetCategoriesEvent>((event, emit) async {
       emit(state.copyWith(
-          categoryModel: null,
-          errorMessage: "",
+
           getCategoriesState: RequestState.loading));
       var result = await getCategoryUseCase.call();
       result.fold(
         (l) {
           emit(state.copyWith(
-              categoryModel: null,
+
               errorMessage: l.toString(),
               getCategoriesState: RequestState.error));
 
@@ -33,23 +32,21 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         (r) {
           emit(state.copyWith(
               categoryModel: r,
-              errorMessage: "",
               getCategoriesState: RequestState.success));
-          add(GetSubCategoriesEvent(r.data?.first.id??""));
+          // add(GetSubCategoriesEvent(r.data?.last.id??""));
         },
       );
     });
 
     on<GetSubCategoriesEvent>((event, emit) async {
       emit(state.copyWith(
-          subCategoryModel: null,
-          errorMessage: "",
+
           getSubCategoriesState: RequestState.loading));
       var result = await getSubCategoryUseCase.call(event.catId);
       result.fold(
             (l) {
           emit(state.copyWith(
-              subCategoryModel: null,
+
               errorMessage: l.toString(),
               getSubCategoriesState: RequestState.error));
 
@@ -58,7 +55,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
             (r) {
           emit(state.copyWith(
               subCategoryModel: r,
-              errorMessage: "",
+
               getSubCategoriesState: RequestState.success));
         },
       );

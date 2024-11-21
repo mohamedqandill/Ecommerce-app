@@ -32,8 +32,8 @@ class TotalPriceAndCheckoutBotton extends StatelessWidget {
               width: 90.w,
               child: Text(
                 'EGP $totalPrice',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                // maxLines: 1,
+                // overflow: TextOverflow.ellipsis,
                 style: getMediumStyle(
                   color: ColorManager.textColor,
                   fontSize: AppSize.s18.sp,
@@ -42,7 +42,7 @@ class TotalPriceAndCheckoutBotton extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(width: 18.h),
+        SizedBox(width: 25.h),
 
         // Checkout button ================================
         Expanded(

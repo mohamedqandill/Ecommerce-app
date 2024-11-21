@@ -9,26 +9,26 @@ class CacheHelper {
   }
 
   // Save data in shared preferences
-  static Future<void> saveData<T>(String key, T value) async {
-    if (_preferences == null) return;
+  static Future<bool> saveData<T>(String key, T value) async {
+    if (_preferences == null) init();
 
     if (value is String) {
-      await _preferences!.setString(key, value);
+     return await _preferences!.setString(key, value);
     } else if (value is int) {
-      await _preferences!.setInt(key, value);
+     return await _preferences!.setInt(key, value);
     } else if (value is bool) {
-      await _preferences!.setBool(key, value);
+     return await _preferences!.setBool(key, value);
     } else if (value is double) {
-      await _preferences!.setDouble(key, value);
+      return await _preferences!.setDouble(key, value);
     } else if (value is List<String>) {
-      await _preferences!.setStringList(key, value);
+      return await _preferences!.setStringList(key, value);
     } else {
       throw Exception('Invalid type');
     }
   }
 
   // Retrieve data from shared preferences
-  static Future<T?> getData<T>(String key) async {
+  static T? getData<T>(String key)  {
     if (_preferences == null) return null;
 
     if (T == String) {

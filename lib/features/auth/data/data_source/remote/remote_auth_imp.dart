@@ -20,6 +20,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           endPoints: EndPoints.login,
           body: {"email": email, "password": password});
       if (response.statusCode == 200) {
+        print(response.data['token']);
         await CacheHelper.saveData<String>("token", response.data['token']);
 
         return true;

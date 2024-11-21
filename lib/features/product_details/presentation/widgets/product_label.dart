@@ -19,7 +19,7 @@ final String productPrice;
                   .copyWith(fontSize: 18.sp),
             )),
         Text(
-          productPrice,
+          "EGP $productPrice",
           style: getMediumStyle(color: ColorManager.primary)
               .copyWith(fontSize: 18.sp),
         ),

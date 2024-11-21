@@ -21,6 +21,7 @@ class CustomCategoryWidget extends StatelessWidget {
         print(categoryModel?.id);
         print(categoryModel?.id);
         Navigator.push(context, MaterialPageRoute(builder: (context) {
+          print(categoryModel?.id.toString());
           return ProductsScreen(
             id: categoryModel!.id!,
 

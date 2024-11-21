@@ -37,6 +37,7 @@ class SubCategoriesList extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
                 childCount: subCategory?.data?.length??0,
                 (context, index) => SubCategoryItem(
+                  id: subCategory?.data?[index].id??"",
                    title: subCategory?.data?[index].name?.split(" ").first??"",
                     image: ImageAssets.productImage,
                     goToCategoryProductsListScreen),

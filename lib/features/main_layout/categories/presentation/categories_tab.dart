@@ -34,10 +34,26 @@ class CategoriesTab extends StatelessWidget {
           );
         },
         listener: (context, state) {
-          // if(state.getCategoriesState==RequestState.success){
+          //
+          // if(state.getCategoriesState==RequestState.loading&&state.getCategoriesState==RequestState.loading){
+          //   showDialog
+          //       (
+          //       context: context, builder: (context) {
+          //       return AlertDialog(
+          //         backgroundColor: Colors.transparent,
+          //         content: Center(
+          //           child: CircularProgressIndicator(color: Colors.blue,),
+          //         ),
+          //       );
+          //     },);
+          // }
+          // else if(state.getCategoriesState==RequestState.success&&state.getCategoriesState==RequestState.success){
           //   Navigator.pop(context);
           // }
-          // if(state.getCategoriesState==RequestState.loading){
+          // if(state.getCategoriesState==RequestState.success||state.getSubCategoriesState==RequestState.success){
+          //   Navigator.pop(context);
+          // }
+          // if(state.getCategoriesState==RequestState.loading||state.getSubCategoriesState==RequestState.loading){
           //   showDialog
           //     (
           //     context: context, builder: (context) {

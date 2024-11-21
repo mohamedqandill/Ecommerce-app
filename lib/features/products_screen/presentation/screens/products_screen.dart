@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/core/resources/enums.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
 import 'package:ecommerce_app/di.dart';
 import 'package:ecommerce_app/features/products_screen/presentation/bloc/product_bloc.dart';
@@ -21,7 +22,21 @@ class ProductsScreen extends StatelessWidget {
   create: (context) => getIt<ProductBloc>()..add(GetProductsEvent(id!)),
   child: BlocConsumer<ProductBloc, ProductState>(
   listener: (context, state) {
-    // TODO: implement listener
+    if(state.getProductState==RequestState.loading){
+      showDialog
+          (
+          context: context, builder: (context) {
+          return AlertDialog(
+            backgroundColor: Colors.transparent,
+            content: Center(
+              child: CircularProgressIndicator(color: Colors.blue,),
+            ),
+          );
+        },);
+    }
+    if(state.getProductState==RequestState.success){
+      Navigator.pop(context);
+    }
   },
   builder: (context, state) {
 
@@ -44,6 +59,7 @@ class ProductsScreen extends StatelessWidget {
                 ),
                 itemBuilder: (context, index) {
                   return CustomProductWidget(
+                    productModel:state.productModel?.data?[index],
                     image: state.productModel?.data?[index].imageCover??"",
                     title: state.productModel?.data?[index].title??"",
                     price: state.productModel?.data?[index].price?.toDouble()??0.0,
