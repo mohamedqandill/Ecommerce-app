@@ -2,6 +2,7 @@ import 'package:colornames/colornames.dart';
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
+import 'package:ecommerce_app/features/main_layout/favourite/data/models/WashListModel.dart';
 import 'package:ecommerce_app/features/main_layout/favourite/presentation/widgets/custom_txt_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +10,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FavouriteItemDetails extends StatelessWidget {
-  const FavouriteItemDetails({required this.product, super.key});
+   FavouriteItemDetails({required this.washListData,required this.product, super.key});
 
   final Map<String, dynamic> product;
+  WashListData? washListData;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class FavouriteItemDetails extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         CustomTextWgt(
-          data: product["title"],
+          data: washListData?.title??"",
           textStyle: getSemiBoldStyle(
               color: ColorManager.primaryDark, fontSize: AppSize.s18.sp),
         ),
@@ -43,7 +45,7 @@ class FavouriteItemDetails extends StatelessWidget {
         Row(
           children: [
             CustomTextWgt(
-              data: 'EGP ${product["finalPrice"]}  ',
+              data: 'EGP ${washListData?.price??""}  ',
               textStyle: getSemiBoldStyle(
                       color: ColorManager.primaryDark, fontSize: AppSize.s18.sp)
                   .copyWith(
@@ -60,7 +62,7 @@ class FavouriteItemDetails extends StatelessWidget {
                           height: AppSize.s10.h,
                         ),
                         CustomTextWgt(
-                            data: 'EGP ${product["salePrice"]}',
+                            data: '* ${washListData?.sold??""}',
                             textStyle: getMediumStyle(
                                     color: ColorManager.appBarTitleColor
                                         .withOpacity(.6))

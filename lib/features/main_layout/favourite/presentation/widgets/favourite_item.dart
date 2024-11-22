@@ -4,14 +4,20 @@ import 'package:ecommerce_app/core/resources/constants_manager.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
 import 'package:ecommerce_app/core/routes_manager/routes.dart';
 import 'package:ecommerce_app/core/widget/heart_button.dart';
+import 'package:ecommerce_app/features/main_layout/favourite/data/models/WashListModel.dart';
 import 'package:ecommerce_app/features/main_layout/favourite/presentation/widgets/add_to_cart_button.dart';
 import 'package:ecommerce_app/features/main_layout/favourite/presentation/widgets/favourite_item_details.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
+
+import '../../../../product_details/presentation/bloc/product_details_bloc.dart';
 
 class FavoriteItem extends StatelessWidget {
-  const FavoriteItem({super.key, required this.product});
+  FavoriteItem({required this.washListData, super.key, required this.product});
   final Map<String, dynamic> product;
+  WashListData? washListData;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -38,7 +44,7 @@ class FavoriteItem extends StatelessWidget {
                   width: AppSize.s120.w,
                   height: AppSize.s135.h,
                   fit: BoxFit.cover,
-                  imageUrl: product["imageUrl"],
+                  imageUrl: washListData?.imageCover ?? "",
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(
                       color: ColorManager.primary,
@@ -55,6 +61,7 @@ class FavoriteItem extends StatelessWidget {
                 child: Padding(
                     padding: EdgeInsets.only(left: AppSize.s8.w),
                     child: FavouriteItemDetails(
+                      washListData: washListData,
                       product: product,
                     ))),
             Column(
@@ -66,10 +73,19 @@ class FavoriteItem extends StatelessWidget {
                 }),
                 SizedBox(height: AppSize.s14.h),
                 AddToCartButton(
-                  onPressed: () {
-                    //TODO:add product to cart
-                  },
                   text: AppConstants.addToCart,
+                  onPressed: () {
+                    toastification.show(
+                      context: context,
+                      backgroundColor: Colors
+                          .blueAccent, // optional if you use ToastificationWrapper
+                      title: const Text('Product has been added Successfuly'),
+                      autoCloseDuration: const Duration(seconds: 3),
+                    );
+                    BlocProvider.of<ProductDetailsBloc>(context)
+                        .add(AddToCartEvent(washListData?.id ?? ""));
+                  },
+                  //TODO:add product to cart
                 )
               ],
             )

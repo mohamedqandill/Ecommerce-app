@@ -8,4 +8,5 @@ abstract class GetProductRepo{
 
 
   Future<Either<RouteFailures,ProductModel>> getProduct(String id);
+  Future<Either<RouteFailures,bool>> addToWishList(String prodId);
 }

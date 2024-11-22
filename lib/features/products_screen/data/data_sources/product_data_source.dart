@@ -5,4 +5,5 @@ import 'package:ecommerce_app/features/products_screen/data/models/ProductModel.
 abstract class GetProductDS{
 
   Future<ProductModel> getProduct(String id);
+  Future<bool> addToWishList(String prodId);
 }

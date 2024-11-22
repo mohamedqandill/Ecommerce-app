@@ -65,7 +65,7 @@ class ProductDetails extends StatelessWidget {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   ProductSlider(
                     items: (productModel?.images?.map((imageUrl) {
-                      return ProductItem(imageUrl: imageUrl);
+                      return ProductItem(productModel:productModel,imageUrl: imageUrl);
                     }).toList()) ?? [], initialIndex: 0,
                   ),
                   SizedBox(

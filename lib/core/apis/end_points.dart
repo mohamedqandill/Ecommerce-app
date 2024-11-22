@@ -7,4 +7,5 @@ class EndPoints{
   static const String subCategory="/api/v1/subcategories";
   static const String products="/api/v1/products";
   static const String addToCart="/api/v1/cart";
+  static const String addToWishList="/api/v1/wishlist";
 }

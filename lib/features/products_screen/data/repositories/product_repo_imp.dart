@@ -28,6 +28,19 @@ class GetProductRepoImp implements GetProductRepo{
     }
   }
 
+  @override
+  Future<Either<RouteFailures, bool>> addToWishList(String prodId)async {
+    try{
+      bool data=await getProductDS.addToWishList(prodId);
+      return Right(data);
+
+    }
+    catch(e){
+    throw  Left(RouteRemoteFailures(e.toString()));
+
+    }
+  }
+
 
 
 

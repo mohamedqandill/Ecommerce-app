@@ -113,7 +113,9 @@ class CustomProductWidget extends StatelessWidget {
                         Positioned(
                             top: height * 0.01,
                             right: width * 0.02,
-                            child: HeartButton(onTap: () {})),
+                            child: HeartButton(onTap: () {
+                              BlocProvider.of<ProductDetailsBloc>(context).add(AddToWashEvent(productModel?.id??""));
+                            })),
                       ],
                     ),
                   ),
