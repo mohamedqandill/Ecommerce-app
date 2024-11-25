@@ -1,29 +1,39 @@
 import 'package:ecommerce_app/core/resources/assets_manager.dart';
+import 'package:ecommerce_app/features/main_layout/home/data/models/BrandsModel.dart';
+import 'package:ecommerce_app/features/products_screen/presentation/screens/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomBrandWidget extends StatelessWidget {
-  const CustomBrandWidget({super.key});
+   CustomBrandWidget({required this.brandsData,super.key});
+  BrandsData? brandsData;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(100.r),
-          child: Container(
-            height: 100.h,
-            width: 100.w,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-            ),
-            child: Image.asset(
-              ImageAssets.brandHomeImage,
-              fit: BoxFit.scaleDown,
+    return InkWell(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return ProductsScreen(id: brandsData?.id??"",);
+        },));
+      },
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(100.r),
+            child: Container(
+              height: 100.h,
+              width: 100.w,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+              ),
+              child: Image.network(
+                brandsData?.image??"",
+                fit: BoxFit.scaleDown,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

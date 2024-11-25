@@ -30,8 +30,8 @@ class _HeartButtonState extends State<HeartButton> {
         toastification.show(
           context: context,
           backgroundColor:
-              Colors.blueAccent, // optional if you use ToastificationWrapper
-          title: const Text('Product has been added Successfully'),
+              Colors.white, // optional if you use ToastificationWrapper
+          title: const Text('Product added successfully to your wishlist',style:  TextStyle(color: Colors.blueAccent),),
           autoCloseDuration: const Duration(seconds: 3),
         );
         BlocProvider.of<ProductDetailsBloc>(context)

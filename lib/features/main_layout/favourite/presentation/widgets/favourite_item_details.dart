@@ -10,9 +10,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FavouriteItemDetails extends StatelessWidget {
-   FavouriteItemDetails({required this.washListData,required this.product, super.key});
+   FavouriteItemDetails({required this.washListData, super.key});
 
-  final Map<String, dynamic> product;
   WashListData? washListData;
 
   @override
@@ -28,18 +27,8 @@ class FavouriteItemDetails extends StatelessWidget {
         ),
         Row(
           children: [
-            Container(
-              margin: EdgeInsets.only(right: AppSize.s10.w),
-              width: AppSize.s14.w,
-              height: AppSize.s14.h,
-              decoration: BoxDecoration(
-                  color: product["color"], shape: BoxShape.circle),
-            ),
-            CustomTextWgt(
-              data: (product["color"] as Color).colorName,
-              textStyle: getMediumStyle(
-                  color: ColorManager.primaryDark, fontSize: AppSize.s14.sp),
-            ),
+
+
           ],
         ),
         Row(
@@ -52,9 +41,9 @@ class FavouriteItemDetails extends StatelessWidget {
                 letterSpacing: 0.17,
               ),
             ),
-            product["salePrice"] == null
-                ? const SizedBox.shrink()
-                : Flexible(
+
+
+                 Flexible(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

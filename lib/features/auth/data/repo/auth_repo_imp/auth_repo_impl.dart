@@ -6,6 +6,7 @@ import 'package:ecommerce_app/features/auth/domain/repo/auth_repo.dart';
 import '../../../../../core/faliures/faliures.dart';
 import '../../models/user.dart';
 
+
 class AuthRepoImpl implements AuthRepo{
   AuthRemoteDataSource authRemoteDataSource;
   AuthRepoImpl(this.authRemoteDataSource);

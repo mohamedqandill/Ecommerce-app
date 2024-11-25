@@ -192,8 +192,8 @@ class CustomProductWidget extends StatelessWidget {
                                   onTap: () {
                                     toastification.show(
                                       context: context,
-                                      backgroundColor: Colors.blueAccent, // optional if you use ToastificationWrapper
-                                      title: const Text('Product has been added Successfuly'),
+                                      backgroundColor: Colors.white, // optional if you use ToastificationWrapper
+                                      title:  Text("${state.addToCartModel?.message}",style: const TextStyle(color: Colors.lightBlueAccent),),
                                       autoCloseDuration: const Duration(seconds: 3),
                                     );
                                     BlocProvider.of<ProductDetailsBloc>(context)

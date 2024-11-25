@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:ecommerce_app/core/apis/api_manager.dart';
 import 'package:ecommerce_app/core/resources/enums.dart';
 import 'package:ecommerce_app/di.dart';
+import 'package:ecommerce_app/features/main_layout/home/presentation/widgets/custom_brand_widget.dart';
 
 import 'package:ecommerce_app/features/main_layout/home/presentation/widgets/custom_category_widget.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,7 @@ class _HomeTabState extends State<HomeTab> {
     return BlocProvider(
       create: (context) =>
       getIt<HomeBloc>()
-        ..add(GetCategoryEvent()),
+        ..add(GetCategoryEvent())..add(GetBrandsEvent()),
       child: BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {
           if(state.getCategoryState==RequestState.success){
@@ -103,21 +104,23 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                       ),
                     ),
-                    // SizedBox(height: 12.h),
-                    // CustomSectionBar(sectionNname: 'Brands', function: () {}),
-                    // SizedBox(
-                    //   height: 270.h,
-                    //   child: GridView.builder(
-                    //     scrollDirection: Axis.horizontal,
-                    //     itemBuilder: (context, index) {
-                    //       return const CustomBrandWidget();
-                    //     },
-                    //     itemCount: 20,
-                    //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    //       crossAxisCount: 2,
-                    //     ),
-                    //   ),
-                    // ),
+                    SizedBox(height: 12.h),
+                    CustomSectionBar(sectionNname: 'Brands', function: () {}),
+                    SizedBox(
+                      height: 270.h,
+                      child: GridView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return  CustomBrandWidget(
+                            brandsData: state.brandsModel?.data?[index],
+                          );
+                        },
+                        itemCount: state.brandsModel?.data?.length??0,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
+                      ),
+                    ),
                     // CustomSectionBar(
                     //   sectionNname: 'Most Selling Products',
                     //   function: () {},

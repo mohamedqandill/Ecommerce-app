@@ -89,7 +89,7 @@ class ProductData {
   String? imageCover;
   Category? category;
   Brand? brand;
-  double? ratingsAverage;
+  num? ratingsAverage;
   String? createdAt;
   String? updatedAt;
 

@@ -3,11 +3,13 @@ import 'package:ecommerce_app/features/auth/domain/entity/signup_entity.dart';
 import 'package:ecommerce_app/features/auth/domain/use_case/login_use_case.dart';
 import 'package:ecommerce_app/features/auth/domain/use_case/signup_use_case.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../core/resources/enums.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
+
 
 class AuthBloc extends Bloc<AuthEvent, AuthLoginState> {
   LoginUSeCase loginUSeCase;
@@ -19,6 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthLoginState> {
   TextEditingController rePasswordCotroller = TextEditingController();
   TextEditingController emailUpCotroller = TextEditingController();
   TextEditingController passwordUpCotroller = TextEditingController();
+
   AuthBloc(this.loginUSeCase,this.signupUseCase) : super(AuthInit()) {
     on<AuthEvent>((event, emit) {
       // TODO: implement event handler

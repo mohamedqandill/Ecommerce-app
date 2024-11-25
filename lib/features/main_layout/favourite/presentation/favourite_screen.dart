@@ -15,24 +15,26 @@ class FavouriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-      getIt<WashListBloc>()
-        ..add( GetWashListEvent()),
+      create: (context) => getIt<WashListBloc>()..add(const GetWashListEvent()),
       child: BlocConsumer<WashListBloc, WashListState>(
         listener: (context, state) {
-          if(state.getWashListState==RequestState.loading){
-            showDialog
-              (
-              context: context, builder: (context) {
-              return AlertDialog(
-                backgroundColor: Colors.transparent,
-                content: Center(
-                  child: CircularProgressIndicator(color: Colors.blue,),
-                ),
-              );
-            },);
+          if (state.getWashListState == RequestState.loading ||
+              state.addToCartState == RequestState.loading) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return const AlertDialog(
+                  backgroundColor: Colors.transparent,
+                  content: Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.blue,
+                    ),
+                  ),
+                );
+              },
+            );
           }
-          if(state.getWashListState==RequestState.success){
+          if (state.getWashListState == RequestState.success ) {
             Navigator.pop(context);
           }
         },
@@ -41,14 +43,13 @@ class FavouriteScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                   horizontal: AppSize.s14.w, vertical: AppSize.s10.h),
               child: ListView.builder(
-                itemCount: state.washListModel?.data?.length??0,
+                itemCount: state.washListModel?.data?.length ?? 0,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: AppSize.s12.h),
-                    child:
-                    FavoriteItem(
+                    child: FavoriteItem(
                         washListData: state.washListModel?.data?[index],
-                        product: AppConstants.favoriteProducts[index]),
+                       ),
                   );
                 },
               ));

@@ -72,14 +72,14 @@ class ProductDetails extends StatelessWidget {
                     height: 24.h,
                   ),
                   ProductLabel(
-                      productName: productModel?.title?.substring(0, 25) ?? "",
-                      productPrice: productModel!.price.toString()),
+                      productName: productModel?.title?.substring(0, 10) ?? "",
+                      productPrice: productModel?.price?.toString()??""),
                   SizedBox(
                     height: 16.h,
                   ),
                   ProductRating(
-                      productBuyers: productModel!.ratingsQuantity.toString(),
-                      productRating: productModel!.ratingsAverage.toString()),
+                      productBuyers: productModel?.ratingsQuantity?.toString()??"",
+                      productRating: productModel?.ratingsAverage?.toString()??""),
                   SizedBox(
                     height: 16.h,
                   ),
@@ -135,8 +135,8 @@ class ProductDetails extends StatelessWidget {
                           onTap: () {
                             toastification.show(
                               context: context,
-                              backgroundColor: Colors.blueAccent, // optional if you use ToastificationWrapper
-                              title: const Text('Product has been added Successfuly'),
+                              backgroundColor: Colors.white, // optional if you use ToastificationWrapper
+                              title:  Text("${state.addToCartModel?.message}",style: TextStyle(color: Colors.lightBlueAccent),),
                               autoCloseDuration: const Duration(seconds: 3),
                             );
                             BlocProvider.of<ProductDetailsBloc>(context)

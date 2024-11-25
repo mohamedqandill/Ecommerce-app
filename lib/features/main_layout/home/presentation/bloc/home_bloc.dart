@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app/core/resources/enums.dart';
+import 'package:ecommerce_app/features/main_layout/home/data/models/BrandsModel.dart';
+import 'package:ecommerce_app/features/main_layout/home/domain/use_case/get_brands_use_case.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/models/CategoryModel.dart';
@@ -12,7 +14,8 @@ part 'home_state.dart';
 @injectable
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   GetCategoryUseCase getCategoryUseCase;
-  HomeBloc(this.getCategoryUseCase) : super(HomeInit()) {
+  GetBrandsUSeCase getBrandsUSeCase;
+  HomeBloc(this.getCategoryUseCase,this.getBrandsUSeCase) : super(HomeInit()) {
     on<GetCategoryEvent>((event, emit) async{
       emit(
           state.copyWith(
@@ -33,6 +36,32 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             state.copyWith(
                 getCategoryState: RequestState.success,
                 categoryModel: r
+            )
+        );
+      },);
+
+
+    });
+    on<GetBrandsEvent>((event, emit) async{
+      emit(
+          state.copyWith(
+              getBrandsState: RequestState.loading,
+
+          )
+      );
+      var result=await getBrandsUSeCase.call();
+      result.fold((l) {
+        emit(
+            state.copyWith(
+                getBrandsState: RequestState.error,
+                errorMessage: "Error"
+            )
+        );
+      }, (r) {
+        emit(
+            state.copyWith(
+                getBrandsState: RequestState.success,
+                brandsModel: r
             )
         );
       },);

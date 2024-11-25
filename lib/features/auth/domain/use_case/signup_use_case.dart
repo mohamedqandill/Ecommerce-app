@@ -4,6 +4,7 @@ import 'package:ecommerce_app/features/auth/data/models/user.dart';
 import 'package:ecommerce_app/features/auth/domain/entity/signup_entity.dart';
 import 'package:ecommerce_app/features/auth/domain/repo/auth_repo.dart';
 
+
 class SignupUseCase {
   AuthRepo authRepo;
   SignupUseCase(this.authRepo);

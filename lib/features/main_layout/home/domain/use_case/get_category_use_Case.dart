@@ -9,7 +9,7 @@ import '../repo/home_Repo.dart';
 
 @injectable
 class GetCategoryUseCase{
-  GetCategoryRepo getCategoryRepo;
+  HomeRepo getCategoryRepo;
   GetCategoryUseCase(this.getCategoryRepo);
 
   Future<Either<RouteFailures, CategoryModel>> call()=>getCategoryRepo.getCategoryData();
