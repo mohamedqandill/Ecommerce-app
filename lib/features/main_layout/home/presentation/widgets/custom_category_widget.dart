@@ -17,9 +17,7 @@ class CustomCategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: ()async{
-        print(categoryModel?.id);
-        print(categoryModel?.id);
-        print(categoryModel?.id);
+
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           print(categoryModel?.id.toString());
           return ProductsScreen(

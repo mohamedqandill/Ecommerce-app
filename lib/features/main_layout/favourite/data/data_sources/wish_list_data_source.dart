@@ -5,7 +5,8 @@ import 'package:ecommerce_app/features/main_layout/home/data/models/CategoryMode
 import 'package:ecommerce_app/features/products_screen/data/models/ProductModel.dart';
 
 
-abstract class GetWashListDS{
+abstract class GetWishListDS{
 
-  Future<WashListModel> getWashList();
+  Future<WashListModel> getWishList();
+  Future<bool> deleteWishList(String id);
 }

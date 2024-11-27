@@ -2,6 +2,7 @@ import 'package:ecommerce_app/core/resources/assets_manager.dart';
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:ecommerce_app/core/widget/custom_elevated_button.dart';
+import 'package:ecommerce_app/core/widget/product_counter.dart';
 import 'package:ecommerce_app/features/product_details/presentation/widgets/product_color.dart';
 import 'package:ecommerce_app/features/product_details/presentation/widgets/product_description.dart';
 import 'package:ecommerce_app/features/product_details/presentation/widgets/product_item.dart';
@@ -24,6 +25,7 @@ class ProductDetails extends StatelessWidget {
 
   ProductDetails({ this.productModel, super.key});
 
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -33,6 +35,7 @@ class ProductDetails extends StatelessWidget {
           // TODO: implement listener
         },
         builder: (context, state) {
+
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,
@@ -97,12 +100,7 @@ class ProductDetails extends StatelessWidget {
                       style: getMediumStyle(
                           color: ColorManager.appBarTitleColor)
                           .copyWith(fontSize: 18.sp)),
-                  ProductColor(color: const [
-                    Colors.red,
-                    Colors.blueAccent,
-                    Colors.green,
-                    Colors.yellow,
-                  ], onSelected: () {}),
+
                   SizedBox(
                     height: 48.h,
                   ),
@@ -119,7 +117,7 @@ class ProductDetails extends StatelessWidget {
                           SizedBox(
                             height: 12.h,
                           ),
-                          Text(productModel!.price.toString(),
+                          Text(productModel?.price?.toString()??"",
                               style:
                               getMediumStyle(
                                   color: ColorManager.appBarTitleColor)

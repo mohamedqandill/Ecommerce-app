@@ -5,7 +5,7 @@ import 'package:ecommerce_app/core/resources/values_manager.dart';
 import 'package:ecommerce_app/core/routes_manager/routes.dart';
 import 'package:ecommerce_app/core/widget/heart_button.dart';
 import 'package:ecommerce_app/features/main_layout/favourite/data/models/WashListModel.dart';
-import 'package:ecommerce_app/features/main_layout/favourite/presentation/bloc/wash_list_bloc.dart';
+import 'package:ecommerce_app/features/main_layout/favourite/presentation/bloc/wish_list_bloc.dart';
 import 'package:ecommerce_app/features/main_layout/favourite/presentation/widgets/add_to_cart_button.dart';
 import 'package:ecommerce_app/features/main_layout/favourite/presentation/widgets/favourite_item_details.dart';
 import 'package:flutter/material.dart';
@@ -16,13 +16,15 @@ import 'package:toastification/toastification.dart';
 import '../../../../product_details/presentation/bloc/product_details_bloc.dart';
 
 class FavoriteItem extends StatelessWidget {
-  FavoriteItem({required this.washListData, super.key, });
+  FavoriteItem({required this.washListData, super.key,});
+
   WashListData? washListData;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, Routes.productDetails, );
+        Navigator.pushNamed(context, Routes.productDetails,);
       },
       child: Container(
         height: AppSize.s135.h,
@@ -37,7 +39,7 @@ class FavoriteItem extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppSize.s16.r),
                   border:
-                      Border.all(color: ColorManager.primary.withOpacity(.6))),
+                  Border.all(color: ColorManager.primary.withOpacity(.6))),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppSize.s16.r),
                 child: CachedNetworkImage(
@@ -45,15 +47,17 @@ class FavoriteItem extends StatelessWidget {
                   height: AppSize.s135.h,
                   fit: BoxFit.cover,
                   imageUrl: washListData?.imageCover ?? "",
-                  placeholder: (context, url) => Center(
-                    child: CircularProgressIndicator(
-                      color: ColorManager.primary,
-                    ),
-                  ),
-                  errorWidget: (context, url, error) => Icon(
-                    Icons.error,
-                    color: ColorManager.primary,
-                  ),
+                  placeholder: (context, url) =>
+                      Center(
+                        child: CircularProgressIndicator(
+                          color: ColorManager.primary,
+                        ),
+                      ),
+                  errorWidget: (context, url, error) =>
+                      Icon(
+                        Icons.error,
+                        color: ColorManager.primary,
+                      ),
                 ),
               ),
             ),
@@ -68,9 +72,14 @@ class FavoriteItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                HeartButton(onTap: () {
-                  //TODO:remove product from wish list
-                }),
+                InkWell(
+                    onTap: () {
+                      BlocProvider.of<WashListBloc>(context).add(
+                          DeleteWishListEvent(washListData?.id ?? ""));
+                      BlocProvider.of<WashListBloc>(context).add(
+                          GetWashListEvent());
+                    },
+                    child: Icon(Icons.delete, size: 30,)),
                 SizedBox(height: AppSize.s14.h),
                 AddToCartButton(
                   text: AppConstants.addToCart,
@@ -78,8 +87,10 @@ class FavoriteItem extends StatelessWidget {
                     toastification.show(
                       context: context,
                       backgroundColor: Colors
-                          .blueAccent, // optional if you use ToastificationWrapper
-                      title: const Text('Product added successfully to your cart'),
+                          .blueAccent,
+                      // optional if you use ToastificationWrapper
+                      title: const Text(
+                          'Product added successfully to your cart'),
                       autoCloseDuration: const Duration(seconds: 3),
                     );
                     BlocProvider.of<WashListBloc>(context)

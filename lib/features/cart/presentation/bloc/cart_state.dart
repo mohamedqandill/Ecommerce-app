@@ -4,6 +4,7 @@ part of 'cart_bloc.dart';
 class CartState with _$CartState {
   const factory CartState.initial({
    @Default(RequestState.init) RequestState? getCartState,
+   @Default(RequestState.init) RequestState? deleteCartState,
     GetCartModel? getCartModel,
 }) = _Initial;
 }

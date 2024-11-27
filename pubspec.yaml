@@ -17,6 +17,12 @@ dependencies:
   bloc:
   colornames:
   flutter_svg:
+  redacted:
+  skeletonizer:
+  loading_indicator:
+  image_picker: ^1.1.2
+  device_info_plus:
+  permission_handler:
   flutter_native_splash:
   readmore:
   smooth_page_indicator:

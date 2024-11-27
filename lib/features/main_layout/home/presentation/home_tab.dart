@@ -2,17 +2,17 @@ import 'dart:async';
 import 'package:ecommerce_app/core/apis/api_manager.dart';
 import 'package:ecommerce_app/core/resources/enums.dart';
 import 'package:ecommerce_app/di.dart';
+import 'package:ecommerce_app/features/main_layout/home/presentation/categories_screen.dart';
 import 'package:ecommerce_app/features/main_layout/home/presentation/widgets/custom_brand_widget.dart';
 
 import 'package:ecommerce_app/features/main_layout/home/presentation/widgets/custom_category_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/resources/assets_manager.dart';
-import '../data/data_source/home_data_source_imp.dart';
-import '../data/repo/home_repo_imp.dart';
-import '../domain/use_case/get_category_use_Case.dart';
+
 import 'bloc/home_bloc.dart';
 import 'widgets/custom_ads_widget.dart';
 import 'widgets/custom_section_bar.dart';
@@ -53,26 +53,39 @@ class _HomeTabState extends State<HomeTab> {
     _timer.cancel();
     super.dispose();
   }
+  bool isEnabled=true;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
       getIt<HomeBloc>()
-        ..add(GetCategoryEvent())..add(GetBrandsEvent()),
+        ..add(GetCategoryEvent()),
       child: BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {
-          if(state.getCategoryState==RequestState.success){
-            Navigator.pop(context);
-          }
-          if(state.getCategoryState==RequestState.loading){
-           showDialog(context: context, builder: (context) {
-             return Center(child: CircularProgressIndicator(
-               color: Colors.blue,
-               backgroundColor: Colors.transparent,
+          if (state.getCategoryState == RequestState.success ) {
+            Future.delayed(const Duration(seconds: 2),() {
+              isEnabled=false;
+              setState(() {
 
-             ),);
-           },);
+              });
+            },); // Close the loading dialog only when both are successful
+          }
+          //   if (state.getCategoryState == RequestState.loading) {
+          //     showDialog(
+          //         useSafeArea: true,
+          //         context: context, builder: (context) {
+          //       return const Center(child: CircularProgressIndicator(
+          //         color: Colors.blue,
+          //         backgroundColor: Colors.transparent,
+          //       ));
+          //     });
+          //   }
+
+
+          // Handle the error states - close dialog on error if it's opened
+          if (state.getCategoryState == RequestState.error ) {
+
           }
         },
         builder: (context, state) {
@@ -87,20 +100,28 @@ class _HomeTabState extends State<HomeTab> {
                 Column(
                   children: [
                     CustomSectionBar(
-                        sectionNname: 'Categories', function: () {}),
+                        sectionNname: 'Categories', function: () {
+                          Navigator.push(context,MaterialPageRoute(builder: (context) {
+                            return CategoriesScreen();
+                          },));
+
+                    }),
                     SizedBox(
                       height: 270.h,
-                      child: GridView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
+                      child: Skeletonizer(
+                        enabled: isEnabled?true:false,
+                        child: GridView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
 
-                          return  CustomCategoryWidget(
-                            categoryModel: state.categoryModel!.data![index],
-                          );
-                        },
-                        itemCount: state.categoryModel?.data?.length??0,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
+                            return  CustomCategoryWidget(
+                              categoryModel: state.categoryModel!.data![index],
+                            );
+                          },
+                          itemCount: state.categoryModel?.data?.length??0,
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                          ),
                         ),
                       ),
                     ),

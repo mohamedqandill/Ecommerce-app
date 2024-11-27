@@ -19,7 +19,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<GetCategoryEvent>((event, emit) async{
       emit(
           state.copyWith(
+
               getCategoryState: RequestState.loading,
+            errorMessage: ""
 
           )
       );
@@ -34,6 +36,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }, (r) {
         emit(
             state.copyWith(
+               errorMessage: "",
                 getCategoryState: RequestState.success,
                 categoryModel: r
             )
@@ -45,7 +48,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<GetBrandsEvent>((event, emit) async{
       emit(
           state.copyWith(
+
               getBrandsState: RequestState.loading,
+              errorMessage: ""
 
           )
       );
@@ -60,6 +65,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }, (r) {
         emit(
             state.copyWith(
+                errorMessage: "",
                 getBrandsState: RequestState.success,
                 brandsModel: r
             )

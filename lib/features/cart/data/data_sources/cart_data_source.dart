@@ -7,4 +7,5 @@ import 'package:ecommerce_app/features/products_screen/data/models/ProductModel.
 abstract class GetCartDS{
 
   Future<GetCartModel> getCart();
+  Future<bool> deleteCart();
 }

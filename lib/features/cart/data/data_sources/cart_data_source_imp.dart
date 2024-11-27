@@ -19,7 +19,6 @@ class GetCartDSImp implements GetCartDS {
   Future<GetCartModel> getCart()async {
 
     String? token=CacheHelper.getData<String>("token");
-    print("tooooooooooooooooooken $token");
     print(token);
     try {
       var response = await getIt<ApiManager>()
@@ -36,6 +35,28 @@ class GetCartDSImp implements GetCartDS {
     } catch (e) {
       rethrow;
     }
+  }
+
+  @override
+  Future<bool> deleteCart() async{
+    try {
+      String? token=CacheHelper.getData<String>("token");
+      var response = await getIt<ApiManager>()
+          .deleteData(endPoints: EndPoints.addToCart,
+          headers: {
+            "token":token
+          }
+      );
+      if(response.statusCode==200){
+        return true;
+      }
+      return false;
+
+
+    } catch (e) {
+      rethrow;
+    }
+
   }
 
 

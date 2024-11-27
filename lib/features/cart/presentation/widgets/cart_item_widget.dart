@@ -4,19 +4,23 @@ import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
 import 'package:ecommerce_app/core/routes_manager/routes.dart';
 import 'package:ecommerce_app/core/widget/product_counter.dart';
+import 'package:ecommerce_app/features/cart/data/models/GetCartModel.dart';
+import 'package:ecommerce_app/features/product_details/presentation/screen/product_details.dart';
+import 'package:ecommerce_app/features/products_screen/data/models/ProductModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'color_and_size_cart_item.dart';
 
 class CartItemWidget extends StatelessWidget {
-  const CartItemWidget({
+   CartItemWidget({
     super.key,
+
     required this.imagePath,
     required this.title,
-    required this.color,
+
     required this.colorName,
-    required this.size,
+
     required this.price,
     required this.onDeleteTap,
     required this.quantity,
@@ -25,10 +29,12 @@ class CartItemWidget extends StatelessWidget {
   });
   final String imagePath;
   final String title;
-  final Color color;
+
   final String colorName;
-  final int size;
+
+
   final int price;
+
   final void Function() onDeleteTap;
   final int quantity;
   final void Function(int value) onIncrementTap;
@@ -40,7 +46,12 @@ class CartItemWidget extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, Routes.productDetails),
+      onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context) {
+        return ProductDetails(
+
+
+        );
+      },)),
       child: Container(
         height: isPortrait ? height * 0.14 : width * 0.23,
         decoration: BoxDecoration(
@@ -103,11 +114,7 @@ class CartItemWidget extends StatelessWidget {
                   // SizedBox(height: 7.h),
                   const Spacer(),
                   // display color and size===================
-                  ColorAndSizeCartItem(
-                    color: color,
-                    colorName: colorName,
-                    size: size,
-                  ),
+
                   const Spacer(),
                   // display price and quantity =================
                   Row(

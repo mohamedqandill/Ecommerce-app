@@ -55,7 +55,7 @@ class SignInScreen extends StatelessWidget {
         builder: (context, state) {
           var bloc = BlocProvider.of<AuthBloc>(context);
           return Scaffold(
-            backgroundColor: ColorManager.primary,
+            backgroundColor: Colors.white,
             body: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(AppPadding.p20),
@@ -66,28 +66,24 @@ class SignInScreen extends StatelessWidget {
                       SizedBox(
                         height: AppSize.s40.h,
                       ),
-                      Center(child: SvgPicture.asset(SvgAssets.routeLogo)),
+                      // Center(child: SvgPicture.asset(SvgAssets.routeLogo)),
                       SizedBox(
-                        height: AppSize.s40.h,
+                        height: AppSize.s65.h,
                       ),
+
                       Text(
-                        'Welcome Back To Route',
-                        style: getBoldStyle(color: ColorManager.white)
-                            .copyWith(fontSize: FontSize.s24.sp),
-                      ),
-                      Text(
-                        'Please sign in with your mail',
-                        style: getLightStyle(color: ColorManager.white)
-                            .copyWith(fontSize: FontSize.s16.sp),
+                        'Sign in',
+                        style: getBoldStyle(color: ColorManager.black)
+                            .copyWith(fontSize: FontSize.s32.sp),
                       ),
                       SizedBox(
                         height: AppSize.s50.h,
                       ),
                       BuildTextField(
                         controller: bloc.emailCotroller,
-                        backgroundColor: ColorManager.white,
-                        hint: 'enter your name',
-                        label: 'User name',
+                        backgroundColor: Color(0xffF4F4F4),
+                        hint: 'Email Address',
+
                         textInputType: TextInputType.emailAddress,
                         validation: AppValidators.validateEmail,
                       ),
@@ -96,9 +92,9 @@ class SignInScreen extends StatelessWidget {
                       ),
                       BuildTextField(
                         controller: bloc.passwordCotroller,
-                        hint: 'enter your password',
-                        backgroundColor: ColorManager.white,
-                        label: 'Password',
+                        hint: 'Password',
+                        backgroundColor: Color(0xffF4F4F4),
+
                         validation: AppValidators.validatePassword,
                         isObscured: true,
                         textInputType: TextInputType.text,
@@ -113,7 +109,7 @@ class SignInScreen extends StatelessWidget {
                               onTap: () {},
                               child: Text(
                                 'Forget password?',
-                                style: getMediumStyle(color: ColorManager.white)
+                                style: getBoldStyle(color: ColorManager.black)
                                     .copyWith(fontSize: FontSize.s18.sp),
                               )),
                         ],
@@ -128,11 +124,12 @@ class SignInScreen extends StatelessWidget {
                               // borderRadius: AppSize.s8,
                               isStadiumBorder: false,
                               label: 'Login',
-                              backgroundColor: ColorManager.white,
+                              backgroundColor: Color(0xff8E6CEF),
                               textStyle: getBoldStyle(
-                                  color: ColorManager.primary,
-                                  fontSize: AppSize.s18),
+                                  color: Colors.white,
+                                  fontSize: AppSize.s20),
                               onTap: () {
+
                                 bloc.add(LoginEvent(bloc.emailCotroller.text,
                                     bloc.passwordCotroller.text));
                               }),
@@ -146,7 +143,7 @@ class SignInScreen extends StatelessWidget {
                         children: [
                           Text(
                             'Don’t have an account?',
-                            style: getSemiBoldStyle(color: ColorManager.white)
+                            style: getMediumStyle(color: ColorManager.black)
                                 .copyWith(fontSize: FontSize.s16.sp),
                           ),
                           SizedBox(
@@ -157,8 +154,8 @@ class SignInScreen extends StatelessWidget {
                                 context, Routes.signUpRoute),
                             child: Text(
                               'Create Account',
-                              style: getSemiBoldStyle(color: ColorManager.white)
-                                  .copyWith(fontSize: FontSize.s16.sp),
+                              style: getBoldStyle(color: ColorManager.black)
+                                  .copyWith(fontSize: FontSize.s18.sp),
                             ),
                           ),
                         ],

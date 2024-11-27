@@ -1,12 +1,17 @@
+import 'dart:io';
+
+import 'package:ecommerce_app/core/cache/cache_helper.dart';
 import 'package:ecommerce_app/core/resources/assets_manager.dart';
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/font_manager.dart';
 import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
+import 'package:ecommerce_app/features/main_layout/profile_tab/presentation/image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../core/routes_manager/routes.dart';
 import '../../../../core/widget/main_text_field.dart';
 import '../../../../core/widget/validators.dart';
 
@@ -23,9 +28,11 @@ class ProfileTabState extends State<ProfileTab> {
   bool isPasswordReadOnly = true;
   bool isMobileNumberReadOnly = true;
   bool isAddressReadOnly = true;
+  File? pickedImage;
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.all(AppPadding.p20),
       child: SafeArea(
@@ -33,27 +40,148 @@ class ProfileTabState extends State<ProfileTab> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SvgPicture.asset(
-                SvgAssets.routeLogo,
-                height: AppSize.s40,
-                colorFilter: ColorFilter.mode(
-                  ColorManager.primary,
-                  BlendMode.srcIn,
-                ),
-              ),
+
               SizedBox(height: AppSize.s20.h),
-              Text(
-                'Welcome, Mohamed',
-                style: getSemiBoldStyle(
-                    color: ColorManager.primary, fontSize: FontSize.s18),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Welcome, ${CacheHelper.getData<String>(
+                      "name")}',
+                    style: getSemiBoldStyle(
+                        color: ColorManager.primary, fontSize: FontSize.s18),
+                  ),
+                 InkWell(
+                     onTap: () {
+                       Navigator.pushNamed(context, Routes.signInRoute);
+                     },
+                     child: const Icon(Icons.login,size: 30,))
+                ],
               ),
               Text(
-                'mohamed.N@gmail.com',
+                '${CacheHelper.getData<String>("email")}',
                 style: getRegularStyle(
                     color: ColorManager.primary.withOpacity(.5),
                     fontSize: FontSize.s14),
               ),
               SizedBox(height: AppSize.s18.h),
+              Center(
+                child: InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                            content:  SizedBox(
+                              width: 250,
+                              height: 90,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  InkWell(
+                                    onTap: () async {
+                                      File? temp = await ImageFunction.cameraPicker();
+                                      if (temp != null) {
+                                        pickedImage = temp;
+
+                                        setState(() {});
+                                      }
+                                    },
+                                    child: const Column(
+                                      children: [
+                                        Icon(
+                                          Icons.camera,
+                                          size: 45,
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          "Camera",
+                                          style: TextStyle(
+                                              color: Colors.black, fontSize: 22),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () async {
+                                      File? temp = await ImageFunction.galleryPicker();
+                                      if (temp != null) {
+                                        pickedImage = temp;
+
+                                        setState(() {});
+                                      }
+                                    },
+                                    child:const Column(
+                                      children: [
+                                        Icon(
+                                          Icons.photo,
+                                          size: 45,
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          "Gallery",
+                                          style: TextStyle(
+                                              color: Colors.black, fontSize: 22),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ));
+                      },
+                    );
+                  },
+                  child: CircleAvatar(
+                    backgroundImage:
+                    pickedImage == null ? null : FileImage(pickedImage!),
+                    radius: 70,
+                    child: Column(
+
+                      children: [
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        pickedImage == null
+                            ? const Icon(
+                          Icons.person,
+                          color: Colors.blueAccent,
+                          size: 70,
+                        )
+                            : const SizedBox(),
+                        pickedImage != null ? const Spacer() : const SizedBox(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                             Icon(
+                              color: Colors.blueAccent,
+                              Icons.camera_alt,
+                              size: 25,
+                            ),
+                             InkWell(
+                               onTap: () {
+                                 pickedImage=null;
+                                 setState(() {
+
+                                 });
+                               },
+                               child: pickedImage==null?SizedBox():Icon(
+                                color: Colors.blueAccent,
+                                Icons.delete,
+                                size: 25,
+                                                           ),
+                             ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               BuildTextField(
                 borderBackgroundColor: ColorManager.primary.withOpacity(.5),
                 readOnly: isFullNameReadOnly,
@@ -61,7 +189,9 @@ class ProfileTabState extends State<ProfileTab> {
                 hint: 'Enter your full name',
                 label: 'Full Name',
                 controller:
-                    TextEditingController(text: 'Mohamed Mohamed Nabil'),
+                TextEditingController(text: CacheHelper.getData<String>(
+                    "name")
+                ),
                 labelTextStyle: getMediumStyle(
                     color: ColorManager.primary, fontSize: FontSize.s18),
                 suffixIcon: IconButton(
@@ -84,7 +214,8 @@ class ProfileTabState extends State<ProfileTab> {
                 backgroundColor: ColorManager.white,
                 hint: 'Enter your email address',
                 label: 'E-mail address',
-                controller: TextEditingController(text: 'mohamed.N@gmail.com'),
+                controller: TextEditingController(
+                    text: CacheHelper.getData<String>("email")),
                 labelTextStyle: getMediumStyle(
                     color: ColorManager.primary, fontSize: FontSize.s18),
                 suffixIcon: IconButton(
@@ -107,7 +238,8 @@ class ProfileTabState extends State<ProfileTab> {
                     isPasswordReadOnly = false;
                   });
                 },
-                controller: TextEditingController(text: '123456789123456'),
+                controller: TextEditingController(text: CacheHelper.getData<String>(
+                    "password")),
                 borderBackgroundColor: ColorManager.primary.withOpacity(.5),
                 readOnly: isPasswordReadOnly,
                 backgroundColor: ColorManager.white,
@@ -124,7 +256,8 @@ class ProfileTabState extends State<ProfileTab> {
               ),
               SizedBox(height: AppSize.s18.h),
               BuildTextField(
-                controller: TextEditingController(text: '01122118855'),
+                controller: TextEditingController(text: CacheHelper.getData<String>(
+                    "phone")),
                 borderBackgroundColor: ColorManager.primary.withOpacity(.5),
                 readOnly: isMobileNumberReadOnly,
                 backgroundColor: ColorManager.white,
@@ -148,7 +281,7 @@ class ProfileTabState extends State<ProfileTab> {
               SizedBox(height: AppSize.s18.h),
               BuildTextField(
                 controller:
-                    TextEditingController(text: '6th October, street 11.....'),
+                TextEditingController(text: '6th October, street 11.....'),
                 borderBackgroundColor: ColorManager.primary.withOpacity(.5),
                 readOnly: isAddressReadOnly,
                 backgroundColor: ColorManager.white,

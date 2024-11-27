@@ -39,7 +39,7 @@ class SubCategoriesList extends StatelessWidget {
                 (context, index) => SubCategoryItem(
                   id: subCategory?.data?[index].id??"",
                    title: subCategory?.data?[index].name?.split(" ").first??"",
-                    image: ImageAssets.productImage,
+                    image: subCategory?.data?[index].image??"",
                     goToCategoryProductsListScreen),
               ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

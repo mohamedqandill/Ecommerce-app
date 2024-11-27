@@ -9,12 +9,12 @@ class GetCartModel {
     status = json['status'];
     numOfCartItems = json['numOfCartItems'];
     cartId = json['cartId'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? CartData.fromJson(json['data']) : null;
   }
   String? status;
   int? numOfCartItems;
   String? cartId;
-  Data? data;
+  CartData? data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -29,8 +29,8 @@ class GetCartModel {
 
 }
 
-class Data {
-  Data({
+class CartData {
+  CartData({
       this.id, 
       this.cartOwner, 
       this.products, 
@@ -39,7 +39,7 @@ class Data {
       this.v, 
       this.totalCartPrice,});
 
-  Data.fromJson(dynamic json) {
+  CartData.fromJson(dynamic json) {
     id = json['_id'];
     cartOwner = json['cartOwner'];
     if (json['products'] != null) {

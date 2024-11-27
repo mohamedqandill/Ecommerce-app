@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
@@ -30,12 +31,26 @@ class SubCategoryItem extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppSize.s12),
                   border: Border.all(color: ColorManager.primary, width: 2)),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(AppSize.s10),
-                child: Image.asset(
-                  image,
-                  fit: BoxFit.cover,
-                ),
+              child:   CachedNetworkImage(
+                height: 100,
+                width: 100,
+                fit: BoxFit.cover,
+                imageUrl:image??"",
+                placeholder: (context, url) =>
+                const Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) =>
+                const Center(child: Icon(Icons.error)),
+                imageBuilder: (context, imageProvider) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ),

@@ -10,4 +10,5 @@ abstract class GetCartRepo{
 
 
   Future<Either<RouteFailures,GetCartModel>> getCart();
+  Future<Either<RouteFailures,bool>> deleteCart();
 }

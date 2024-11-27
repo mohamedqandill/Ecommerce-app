@@ -34,6 +34,18 @@ class GetCartRepoImp implements GetCartRepo{
     }
   }
 
+  @override
+  Future<Either<RouteFailures, bool>> deleteCart()async {
+    try{
+      var data=await getCartDS.deleteCart();
+      return Right(data);
+
+    }
+    catch(e){
+      throw Left(e.toString());
+    }
+  }
+
 
 
 

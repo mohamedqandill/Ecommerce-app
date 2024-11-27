@@ -46,4 +46,12 @@ class ApiManager {
     return dio.post(AppConstants.baseURL + endPoints,
         data: body, options: Options(headers: headers));
   }
+
+  Future<Response> deleteData(
+      {required String endPoints,
+        Map<String, dynamic>? body,
+        Map<String, dynamic>? headers}) {
+    return dio.delete(AppConstants.baseURL + endPoints,
+        data: body, options: Options(headers: headers));
+  }
 }

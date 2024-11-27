@@ -27,6 +27,11 @@ class CustomBrandWidget extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: Image.network(
+                errorBuilder: (context, error, stackTrace) {
+                  return const Center(
+                    child: Text("Error Image Not Found"),
+                  );
+                },
                 brandsData?.image??"",
                 fit: BoxFit.scaleDown,
               ),

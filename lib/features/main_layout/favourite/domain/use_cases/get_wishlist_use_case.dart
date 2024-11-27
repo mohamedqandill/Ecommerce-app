@@ -11,8 +11,8 @@ import '../../data/models/WashListModel.dart';
 @injectable
 class GetWashListUseCase{
 
-  GetWashListRepo getWashListRepo;
+  GetWishListRepo getWashListRepo;
   GetWashListUseCase(this.getWashListRepo);
 
-  Future<Either<RouteFailures, WashListModel>> call()=>getWashListRepo.getWashList();
+  Future<Either<RouteFailures, WashListModel>> call()=>getWashListRepo.getWishList();
 }
