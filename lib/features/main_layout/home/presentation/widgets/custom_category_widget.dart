@@ -22,6 +22,7 @@ class CustomCategoryWidget extends StatelessWidget {
           print(categoryModel?.id.toString());
           return ProductsScreen(
             id: categoryModel!.id!,
+            name: categoryModel?.name??"",
 
           );
         },));

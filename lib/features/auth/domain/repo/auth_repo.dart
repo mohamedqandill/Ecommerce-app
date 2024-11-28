@@ -10,5 +10,8 @@ abstract class AuthRepo{
 
 
   Future<Either<RouteFailures,bool>> login(String email,String password);
+  Future<Either<RouteFailures,bool>> newPassword(String email,String password);
+  Future<Either<RouteFailures,bool>> forgetPassword(String email);
+  Future<Either<RouteFailures,bool>> resetCode(String code);
   Future<Either<RouteFailures,UserModel>> SignUp(SignUpEntity signUpEntity);
 }

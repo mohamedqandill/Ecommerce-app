@@ -1,4 +1,7 @@
 import 'package:ecommerce_app/core/routes_manager/routes.dart';
+import 'package:ecommerce_app/features/auth/presentation/screens/forget_screen.dart';
+import 'package:ecommerce_app/features/auth/presentation/screens/new_password_screen.dart';
+import 'package:ecommerce_app/features/auth/presentation/screens/reset_screen.dart';
 import 'package:ecommerce_app/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:ecommerce_app/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:ecommerce_app/features/main_layout/home/presentation/categories_screen.dart';
@@ -15,6 +18,12 @@ class RouteGenerator {
 
       case Routes.cartRoute:
         return MaterialPageRoute(builder: (_) =>  CartScreen());
+      case Routes.forgetRoute:
+        return MaterialPageRoute(builder: (_) => ForgetScreen());
+      case Routes.resetRoute:
+        return MaterialPageRoute(builder: (_) => ResetScreen());
+      case Routes.newRoute:
+        return MaterialPageRoute(builder: (_) => NewPasswordScreen());
       case Routes.categoryRoute:
         return MaterialPageRoute(builder: (_) => CategoriesScreen());
       case Routes.mainRoute:

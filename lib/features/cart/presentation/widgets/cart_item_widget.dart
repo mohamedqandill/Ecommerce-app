@@ -130,6 +130,7 @@ class CartItemWidget extends StatelessWidget {
                         ),
                       ),
                       ProductCounter(
+                        price: price,
                         add: onIncrementTap,
                         productCounter: quantity,
                         remove: onDecrementTap,

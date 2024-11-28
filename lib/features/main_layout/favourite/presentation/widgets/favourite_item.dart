@@ -76,8 +76,10 @@ class FavoriteItem extends StatelessWidget {
                     onTap: () {
                       BlocProvider.of<WashListBloc>(context).add(
                           DeleteWishListEvent(washListData?.id ?? ""));
-                      BlocProvider.of<WashListBloc>(context).add(
-                          GetWashListEvent());
+                      Future.delayed(const Duration(milliseconds: 800),() {
+                        BlocProvider.of<WashListBloc>(context).add(
+                            GetWashListEvent());
+                      },);
                     },
                     child: Icon(Icons.delete, size: 30,)),
                 SizedBox(height: AppSize.s14.h),

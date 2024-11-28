@@ -39,6 +39,7 @@ class ApiManager {
         queryParameters: params, options: Options(headers: headers));
   }
 
+
   Future<Response> postData(
       {required String endPoints,
       Map<String, dynamic>? body,
@@ -52,6 +53,13 @@ class ApiManager {
         Map<String, dynamic>? body,
         Map<String, dynamic>? headers}) {
     return dio.delete(AppConstants.baseURL + endPoints,
+        data: body, options: Options(headers: headers));
+  }
+  Future<Response> putData(
+      {required String endPoints,
+        Map<String, dynamic>? body,
+        Map<String, dynamic>? headers}) {
+    return dio.put(AppConstants.baseURL + endPoints,
         data: body, options: Options(headers: headers));
   }
 }

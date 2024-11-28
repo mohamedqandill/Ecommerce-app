@@ -11,6 +11,7 @@ import '../../../../../core/cache/cache_helper.dart';
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   ApiManager apiManager;
+
   AuthRemoteDataSourceImpl(this.apiManager);
 
   @override
@@ -30,19 +31,61 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       throw RouteRemoteExceptions(e.toString());
     }
   }
+  @override
+  Future<bool> newPassword(String email, String password) async {
+    try {
+      final response = await apiManager.putData(
+          endPoints: EndPoints.newPass,
+          body: {"email": email, "newPassword": password});
+      if (response.statusCode == 200) {
+
+        return true;
+      }
+      return false;
+    } catch (e) {
+      throw RouteRemoteExceptions(e.toString());
+    }
+  }
 
   @override
   Future<UserModel> SignUp(SignUpEntity signUpEntity) async {
     try {
-      var response = await apiManager.postData(endPoints: EndPoints.signUp,body: {
+      var response =
+          await apiManager.postData(endPoints: EndPoints.signUp, body: {
         "email": signUpEntity.email,
         "phone": signUpEntity.phone,
         "name": signUpEntity.name,
         "rePassword": signUpEntity.rePassword,
         "password": signUpEntity.password
       });
-      UserModel userModel=UserModel.fromJson(response.data);
+      UserModel userModel = UserModel.fromJson(response.data);
       return userModel;
+    } catch (e) {
+      throw RouteRemoteExceptions(e.toString());
+    }
+  }
+
+  @override
+  Future<bool> forgetPassword(String email) async {
+    try {
+      final response = await apiManager.postData(
+          endPoints: EndPoints.forgetPassword, body: {"email": email});
+      if (response.statusCode == 200) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      throw RouteRemoteExceptions(e.toString());
+    }
+  } @override
+  Future<bool> resetCode(String code) async {
+    try {
+      final response = await apiManager.postData(
+          endPoints: EndPoints.reset, body: {"resetCode": code});
+      if (response.statusCode == 200) {
+        return true;
+      }
+      return false;
     } catch (e) {
       throw RouteRemoteExceptions(e.toString());
     }

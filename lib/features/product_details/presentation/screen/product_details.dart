@@ -81,6 +81,7 @@ class ProductDetails extends StatelessWidget {
                     height: 16.h,
                   ),
                   ProductRating(
+                    price: productModel?.price??0,
                       productBuyers: productModel?.ratingsQuantity?.toString()??"",
                       productRating: productModel?.ratingsAverage?.toString()??""),
                   SizedBox(
@@ -96,13 +97,10 @@ class ProductDetails extends StatelessWidget {
                   SizedBox(
                     height: 20.h,
                   ),
-                  Text('Color',
-                      style: getMediumStyle(
-                          color: ColorManager.appBarTitleColor)
-                          .copyWith(fontSize: 18.sp)),
+
 
                   SizedBox(
-                    height: 48.h,
+                    height: 90.h,
                   ),
                   Row(
                     children: [
@@ -134,7 +132,7 @@ class ProductDetails extends StatelessWidget {
                             toastification.show(
                               context: context,
                               backgroundColor: Colors.white, // optional if you use ToastificationWrapper
-                              title:  Text("${state.addToCartModel?.message}",style: TextStyle(color: Colors.lightBlueAccent),),
+                              title:  Text("${state.addToCartModel?.message}",style:const TextStyle(color: Colors.lightBlueAccent),),
                               autoCloseDuration: const Duration(seconds: 3),
                             );
                             BlocProvider.of<ProductDetailsBloc>(context)

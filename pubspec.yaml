@@ -14,6 +14,10 @@ dependencies:
   flutter_screenutil:
   flutter_slidable:
   auto_size_text:
+  internet_connection_checker_plus:
+  internet_connectivity_checker:
+  custom_refresh_indicator:
+  flutter_paypal_payment:
   bloc:
   colornames:
   flutter_svg:

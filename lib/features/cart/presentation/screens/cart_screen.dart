@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ecommerce_app/core/resources/assets_manager.dart';
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/enums.dart';
@@ -10,9 +12,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 
+import '../../../../core/apis/keys/keys.dart';
 import '../../../../core/resources/font_manager.dart';
 import '../../../../core/routes_manager/routes.dart';
+import '../../data/models/amount_model.dart';
+import '../../data/models/item_model.dart';
 import '../widgets/cart_item_widget.dart';
 import '../widgets/total_price_and_checkout_botton.dart';
 
@@ -176,7 +182,10 @@ class _CartScreenState extends State<CartScreen> {
                         TotalPriceAndCheckoutBotton(
                           totalPrice:
                               state.getCartModel?.data?.totalCartPrice ?? 0,
-                          checkoutButtonOnTap: () {},
+                          checkoutButtonOnTap: () {
+
+
+                          },
                         ),
                         SizedBox(height: 10.h),
                       ],
@@ -187,4 +196,7 @@ class _CartScreenState extends State<CartScreen> {
       ),
     );
   }
+
+
+
 }

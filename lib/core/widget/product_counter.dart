@@ -1,14 +1,19 @@
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/styles_manager.dart';
+import 'package:ecommerce_app/features/product_details/presentation/bloc/product_details_bloc.dart';
+import 'package:ecommerce_app/features/products_screen/data/models/ProductModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductCounter extends StatefulWidget {
    int productCounter;
   final void Function(int) add;
   final void Function(int) remove;
+  int? price;
    ProductCounter(
       {super.key,
+        required this.price,
       required this.add,
       required this.remove,
       required this.productCounter});
@@ -56,8 +61,13 @@ class _ProductCounterState extends State<ProductCounter> {
           InkWell(
               onTap: () {
                 widget.productCounter++;
+
+
                 setState(() {
 
+                  widget.price!*widget.productCounter;
+                  print(widget.price);
+                  print(widget.price);
                 });
                 widget.add.call(widget.productCounter);
               },

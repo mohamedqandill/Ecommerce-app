@@ -85,6 +85,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               Navigator.push(
                                   context, MaterialPageRoute(builder: (context) {
                                 return ProductsScreen(
+                                  name: state.categoryModel?.data?[index].name??"",
                                   id: state.categoryModel?.data?[index].id ?? "",);
                               },));
                             },

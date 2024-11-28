@@ -16,7 +16,7 @@ void main()async {
    await CacheHelper.init();
  String? token= CacheHelper.getData<String>("token");
  print(token);
- print(token);
+
   runApp( MainApp(
     isLogged: token == null?false:true,
   ));

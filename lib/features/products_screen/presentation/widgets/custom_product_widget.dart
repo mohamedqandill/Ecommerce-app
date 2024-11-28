@@ -19,7 +19,7 @@ class CustomProductWidget extends StatelessWidget {
   final String title;
   final String description;
   final double price;
-  final double discountPercentage;
+
   final double rating;
   ProductData? productModel;
 
@@ -32,7 +32,6 @@ class CustomProductWidget extends StatelessWidget {
     required this.title,
     required this.description,
     required this.price,
-    required this.discountPercentage,
     required this.rating,
   });
 
@@ -149,15 +148,12 @@ class CustomProductWidget extends StatelessWidget {
                               children: [
                                 Text(
                                   "EGP $price",
-                                  style: getRegularStyle(
+                                  style: getBoldStyle(
                                     color: ColorManager.textColor,
                                     fontSize: 14.sp,
                                   ),
                                 ),
-                                Text(
-                                  "$discountPercentage %",
-                                  style: getTextWithLine(),
-                                ),
+
                               ],
                             ),
                           ),

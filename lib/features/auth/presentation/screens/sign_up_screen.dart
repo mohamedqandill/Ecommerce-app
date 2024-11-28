@@ -21,6 +21,9 @@ import '../../../../core/widget/main_text_field.dart';
 import '../../../../core/widget/validators.dart';
 import '../../data/data_source/remote/remote_auth_imp.dart';
 import '../../data/repo/auth_repo_imp/auth_repo_impl.dart';
+import '../../domain/use_case/forget_password_use_case.dart';
+import '../../domain/use_case/new_pass_usecase.dart';
+import '../../domain/use_case/reset_code_use_case.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -28,136 +31,150 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthBloc(
-          LoginUSeCase(AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager()))),
-          SignupUseCase(AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager())))),
-      child: BlocConsumer<AuthBloc, AuthLoginState>(
-        listener: (context, state) {
-          if (state.requestState == RequestState.success) {
-            Navigator.pushNamed(context, Routes.signInRoute);
-          }
-          if (state.requestState == RequestState.error) {
-            print(state.errorMessage ?? "");
-          }
-        },
-        builder: (context, state) {
-          var bloc = BlocProvider.of<AuthBloc>(context);
-          return Scaffold(
-            backgroundColor: Colors.white,
-            body: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(AppPadding.p20),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: AppSize.s40.h,
-                      ),
-                      // Center(child: SvgPicture.asset(SvgAssets.routeLogo)),
-                      SizedBox(
-                        height: AppSize.s40.h,
-                      ),
-                     InkWell(
-                       onTap: () {
-                         Navigator.pop(context);
-                       },
-                       child: const CircleAvatar(
-                           backgroundColor: Color(0xffF4F4F4),
-                          radius: 20,
-                          child: Icon(Icons.arrow_back_ios_new,size: 20,),
-                        ),
-                     ),
-                      SizedBox(height: 20.sp,),
-                      Text(
-                        "Create Account",
-                        style: getBoldStyle(color: Colors.black)
-                            .copyWith(fontSize: FontSize.s32.sp),
-                      ),
-                      SizedBox(height: 20.sp,),
-                      BuildTextField(
-                        controller: bloc.nameCotroller,
-                        backgroundColor: Color(0xffF4F4F4),
-                        hint: 'Full Name',
-                        textInputType: TextInputType.name,
-                        validation: AppValidators.validateFullName,
-                      ),
-                      SizedBox(
-                        height: AppSize.s18.h,
-                      ),
-                      BuildTextField(
-                        controller: bloc.phoneCotroller,
-                        hint: 'Mobile Number',
-                        backgroundColor: Color(0xffF4F4F4),
-                        validation: AppValidators.validatePhoneNumber,
-                        textInputType: TextInputType.phone,
-                      ),
-                      SizedBox(
-                        height: AppSize.s18.h,
-                      ),
-                      BuildTextField(
-                        controller: bloc.emailUpCotroller,
-                        hint: 'Email Address',
-                        backgroundColor: Color(0xffF4F4F4),
-                        validation: AppValidators.validateEmail,
-                        textInputType: TextInputType.emailAddress,
-                      ),
-                      SizedBox(
-                        height: AppSize.s18.h,
-                      ),
-                      BuildTextField(
-                        controller: bloc.passwordUpCotroller,
-                        hint: 'Password',
-                        backgroundColor: Color(0xffF4F4F4),
-
-                        validation: AppValidators.validatePassword,
-                        isObscured: true,
-                        textInputType: TextInputType.text,
-                      ),
-                      SizedBox(
-                        height: AppSize.s50.h,
-                      ),
-                      Center(
-                        child: SizedBox(
-                          height: AppSize.s60.h,
-                          width: MediaQuery.of(context).size.width * .9,
-                          child: CustomElevatedButton(
-                            // borderRadius: AppSize.s8,
-                            label: 'Sign Up',
-                            backgroundColor: Color(0xff8E6CEF),
-                            textStyle: getBoldStyle(
-                                color: Colors.white,
-                                fontSize: AppSize.s20),
-                            onTap: () {
-                              SignUpEntity signUpEntity = SignUpEntity(
-                                  email: bloc.emailUpCotroller.text,
-                                  name: bloc.nameCotroller.text,
-                                  password: bloc.passwordUpCotroller.text,
-                                  phone: bloc.phoneCotroller.text,
-                                  rePassword: bloc.passwordUpCotroller.text);
-                              bloc.add(SignUpEvent(signUpEntity));
-                              CacheHelper.saveData<String>(
-                                  "email", bloc.emailUpCotroller.text);
-                              CacheHelper.saveData<String>(
-                                  "name", bloc.nameCotroller.text);
-                              CacheHelper.saveData<String>(
-                                  "phone", bloc.phoneCotroller.text);
-                              CacheHelper.saveData<String>(
-                                  "password", bloc.passwordUpCotroller.text);
-                              print(CacheHelper.saveData<String>(
-                                  "email", bloc.emailUpCotroller.text));
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+        create: (context) =>
+            AuthBloc(
+                LoginUSeCase(
+                    AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager()))),
+                SignupUseCase(
+                    AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager()))),
+                ForgetPasswordUSeCase(
+                    AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager()))),
+                ResetCodeUSeCase(
+                AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager())),
+    ),
+              NewPassUSeCase(
+                AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager())),
               ),
-            ),
-          );
-        },
-      ),
+    ),
+
+    child: BlocConsumer<AuthBloc, AuthLoginState>(
+    listener: (context, state) {
+    if (state.requestState == RequestState.success) {
+    Navigator.pushNamed(context, Routes.signInRoute);
+    }
+    if (state.requestState == RequestState.error) {
+    print(state.errorMessage ?? "");
+    }
+    },
+    builder: (context, state) {
+    var bloc = BlocProvider.of<AuthBloc>(context);
+    return Scaffold(
+    backgroundColor: Colors.white,
+    body: SafeArea(
+    child: Padding(
+    padding: const EdgeInsets.all(AppPadding.p20),
+    child: SingleChildScrollView(
+    child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+    SizedBox(
+    height: AppSize.s40.h,
+    ),
+    // Center(child: SvgPicture.asset(SvgAssets.routeLogo)),
+    SizedBox(
+    height: AppSize.s40.h,
+    ),
+    InkWell(
+    onTap: () {
+    Navigator.pop(context);
+    },
+    child: const CircleAvatar(
+    backgroundColor: Color(0xffF4F4F4),
+    radius: 20,
+    child: Icon(Icons.arrow_back_ios_new,size: 20,),
+    ),
+    ),
+    SizedBox(height: 20.sp,),
+    Text(
+    "Create Account",
+    style: getBoldStyle(color: Colors.black)
+        .copyWith(fontSize: FontSize.s32.sp),
+    ),
+    SizedBox(height: 20.sp,),
+    BuildTextField(
+    controller: bloc.nameCotroller,
+    backgroundColor: Color(0xffF4F4F4),
+    hint: 'Full Name',
+    textInputType: TextInputType.name,
+    validation: AppValidators.validateFullName,
+    ),
+    SizedBox(
+    height: AppSize.s18.h,
+    ),
+    BuildTextField(
+    controller: bloc.phoneCotroller,
+    hint: 'Mobile Number',
+    backgroundColor: Color(0xffF4F4F4),
+    validation: AppValidators.validatePhoneNumber,
+    textInputType: TextInputType.phone,
+    ),
+    SizedBox(
+    height: AppSize.s18.h,
+    ),
+    BuildTextField(
+    controller: bloc.emailUpCotroller,
+    hint: 'Email Address',
+    backgroundColor: Color(0xffF4F4F4),
+    validation: AppValidators.validateEmail,
+    textInputType: TextInputType.emailAddress,
+    ),
+    SizedBox(
+    height: AppSize.s18.h,
+    ),
+    BuildTextField(
+    controller: bloc.passwordUpCotroller,
+    hint: 'Password',
+    backgroundColor: Color(0xffF4F4F4),
+
+    validation: AppValidators.validatePassword,
+    isObscured: true,
+    textInputType: TextInputType.text,
+    ),
+    SizedBox(
+    height: AppSize.s50.h,
+    ),
+    Center(
+    child: SizedBox(
+    height: AppSize.s60.h,
+    width: MediaQuery.of(context).size.width * .9,
+    child: CustomElevatedButton(
+    // borderRadius: AppSize.s8,
+    label: 'Sign Up',
+    backgroundColor: Color(0xff8E6CEF),
+    textStyle: getBoldStyle(
+    color: Colors.white,
+    fontSize: AppSize.s20),
+    onTap: () {
+    SignUpEntity signUpEntity = SignUpEntity(
+    email: bloc.emailUpCotroller.text,
+    name: bloc.nameCotroller.text,
+    password: bloc.passwordUpCotroller.text,
+    phone: bloc.phoneCotroller.text,
+    rePassword: bloc.passwordUpCotroller.text);
+    bloc.add(SignUpEvent(signUpEntity));
+    CacheHelper.saveData<String>(
+    "email", bloc.emailUpCotroller.text);
+    CacheHelper.saveData<String>(
+    "name", bloc.nameCotroller.text);
+    CacheHelper.saveData<String>(
+    "phone", bloc.phoneCotroller.text);
+    CacheHelper.saveData<String>(
+    "password", bloc.passwordUpCotroller.text);
+    print(CacheHelper.saveData<String>(
+    "email", bloc.emailUpCotroller.text));
+    },
+    ),
+    ),
+    ),
+    ],
+    ),
+    ),
+    ),
+    ),
+    );
+    },
+    )
+    ,
     );
   }
 }

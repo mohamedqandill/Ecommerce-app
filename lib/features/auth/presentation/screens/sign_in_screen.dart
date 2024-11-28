@@ -10,13 +10,17 @@ import 'package:ecommerce_app/features/auth/data/data_source/remote/remote_auth.
 import 'package:ecommerce_app/features/auth/data/data_source/remote/remote_auth_imp.dart';
 import 'package:ecommerce_app/features/auth/data/repo/auth_repo_imp/auth_repo_impl.dart';
 import 'package:ecommerce_app/features/auth/domain/repo/auth_repo.dart';
+import 'package:ecommerce_app/features/auth/domain/use_case/forget_password_use_case.dart';
 import 'package:ecommerce_app/features/auth/domain/use_case/login_use_case.dart';
+import 'package:ecommerce_app/features/auth/domain/use_case/new_pass_usecase.dart';
+import 'package:ecommerce_app/features/auth/domain/use_case/reset_code_use_case.dart';
 import 'package:ecommerce_app/features/auth/domain/use_case/signup_use_case.dart';
 import 'package:ecommerce_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../../../core/resources/enums.dart';
 import '../../../../core/resources/font_manager.dart';
@@ -29,16 +33,35 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthBloc(
+        LoginUSeCase(AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager()))),
+        SignupUseCase(AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager()))),
+        ForgetPasswordUSeCase(
+          AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager())),
+        ),
 
-
-          LoginUSeCase(AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager()))),
-        SignupUseCase(AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager())))
+        ResetCodeUSeCase(
+          AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager())),
+        ),
+        NewPassUSeCase(
+          AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager())),
+        ),
       ),
       child: BlocConsumer<AuthBloc, AuthLoginState>(
         listener: (context, state) {
           if (state.requestState == RequestState.success) {
             Navigator.pushNamedAndRemoveUntil(
                 context, Routes.mainRoute, (r) => false);
+            toastification.show(
+              context: context,
+
+              backgroundColor: Colors.white,
+              // optional if you use ToastificationWrapper
+              title: const Text(
+                "Welcome Back",
+                style: TextStyle(color: Colors.blue),
+              ),
+              autoCloseDuration: const Duration(seconds: 6),
+            );
           }
           if (state.requestState == RequestState.error) {
             showDialog(
@@ -83,7 +106,6 @@ class SignInScreen extends StatelessWidget {
                         controller: bloc.emailCotroller,
                         backgroundColor: Color(0xffF4F4F4),
                         hint: 'Email Address',
-
                         textInputType: TextInputType.emailAddress,
                         validation: AppValidators.validateEmail,
                       ),
@@ -94,7 +116,6 @@ class SignInScreen extends StatelessWidget {
                         controller: bloc.passwordCotroller,
                         hint: 'Password',
                         backgroundColor: Color(0xffF4F4F4),
-
                         validation: AppValidators.validatePassword,
                         isObscured: true,
                         textInputType: TextInputType.text,
@@ -106,7 +127,10 @@ class SignInScreen extends StatelessWidget {
                         children: [
                           const Spacer(),
                           GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, Routes.forgetRoute);
+                              },
                               child: Text(
                                 'Forget password?',
                                 style: getBoldStyle(color: ColorManager.black)
@@ -126,12 +150,25 @@ class SignInScreen extends StatelessWidget {
                               label: 'Login',
                               backgroundColor: Color(0xff8E6CEF),
                               textStyle: getBoldStyle(
-                                  color: Colors.white,
-                                  fontSize: AppSize.s20),
+                                  color: Colors.white, fontSize: AppSize.s20),
                               onTap: () {
+                                if (state.requestState == RequestState.error) {
+                                  toastification.show(
+                                    context: context,
 
-                                bloc.add(LoginEvent(bloc.emailCotroller.text,
-                                    bloc.passwordCotroller.text));
+                                    backgroundColor: Colors.red,
+                                    // optional if you use ToastificationWrapper
+                                    title: const Text(
+                                      "Invalid Email or Password",
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    autoCloseDuration:
+                                        const Duration(seconds: 4),
+                                  );
+                                } else {
+                                  bloc.add(LoginEvent(bloc.emailCotroller.text,
+                                      bloc.passwordCotroller.text));
+                                }
                               }),
                         ),
                       ),
