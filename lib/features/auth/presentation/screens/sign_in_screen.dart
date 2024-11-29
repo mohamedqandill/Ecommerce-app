@@ -38,7 +38,6 @@ class SignInScreen extends StatelessWidget {
         ForgetPasswordUSeCase(
           AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager())),
         ),
-
         ResetCodeUSeCase(
           AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager())),
         ),
@@ -86,9 +85,15 @@ class SignInScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: AppSize.s40.h,
+                      SizedBox(height: 30.h,),
+                      Center(
+                        child: Text(
+                          "Welcome Back!",
+                          style: getBoldStyle(color: Colors.black)
+                              .copyWith(fontSize: FontSize.s32),
+                        ),
                       ),
+
                       // Center(child: SvgPicture.asset(SvgAssets.routeLogo)),
                       SizedBox(
                         height: AppSize.s65.h,
@@ -113,12 +118,14 @@ class SignInScreen extends StatelessWidget {
                         height: AppSize.s28.h,
                       ),
                       BuildTextField(
+
                         controller: bloc.passwordCotroller,
                         hint: 'Password',
                         backgroundColor: Color(0xffF4F4F4),
                         validation: AppValidators.validatePassword,
                         isObscured: true,
                         textInputType: TextInputType.text,
+
                       ),
                       SizedBox(
                         height: AppSize.s8.h,

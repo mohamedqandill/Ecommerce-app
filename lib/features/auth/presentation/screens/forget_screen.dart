@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../../../core/apis/api_manager.dart';
 import '../../../../core/resources/assets_manager.dart';
@@ -32,10 +33,10 @@ class ForgetScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthBloc(
-          LoginUSeCase(AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager()))),
-          SignupUseCase(AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager()))),
-          ForgetPasswordUSeCase(
-              AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager()))),
+        LoginUSeCase(AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager()))),
+        SignupUseCase(AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager()))),
+        ForgetPasswordUSeCase(
+            AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager()))),
         ResetCodeUSeCase(
           AuthRepoImpl(AuthRemoteDataSourceImpl(ApiManager())),
         ),
@@ -45,9 +46,21 @@ class ForgetScreen extends StatelessWidget {
       ),
       child: BlocConsumer<AuthBloc, AuthLoginState>(
         listener: (context, state) {
-
           if (state.requestState == RequestState.error) {
-            print(state.errorMessage ?? "");
+            toastification.show(
+              context: context,
+              backgroundColor: Colors.red,
+              // optional if you use ToastificationWrapper
+              title: const Text(
+                "Please Enter a Valid Email",
+                style:  TextStyle(color: Colors.white),
+              ),
+              autoCloseDuration: const Duration(seconds: 4),
+            );
+          }
+          if (state.requestState == RequestState.success) {
+
+            Navigator.pushNamed(context, Routes.resetRoute);
           }
         },
         builder: (context, state) {
@@ -113,8 +126,8 @@ class ForgetScreen extends StatelessWidget {
                             textStyle: getBoldStyle(
                                 color: Colors.white, fontSize: AppSize.s20),
                             onTap: () {
-                              bloc.add(ForgetPasswordEvent(bloc.emailConfirmCotroller.text));
-                              Navigator.pushNamed(context, Routes.resetRoute);
+                              bloc.add(ForgetPasswordEvent(
+                                  bloc.emailConfirmCotroller.text));
                             },
                           ),
                         ),

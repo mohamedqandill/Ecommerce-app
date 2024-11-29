@@ -69,11 +69,17 @@ class _ProductsScreenState extends State<ProductsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                      style: getBoldStyle(color: Colors.black)
-                          .copyWith(fontSize: FontSize.s22.sp),
-                      "${widget.name??""} (${state.productModel?.results.toString()??""})"),
-                  SizedBox(height: 15.h,),
+                  state.getProductState == RequestState.loading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Text(
+                          style: getBoldStyle(color: Colors.black)
+                              .copyWith(fontSize: FontSize.s22.sp),
+                          "${widget.name ?? ""} (${state.productModel?.results.toString() ?? ""})"),
+                  SizedBox(
+                    height: 15.h,
+                  ),
                   Expanded(
                       child: Skeletonizer(
                     enabled: isEnabled ? true : false,
@@ -99,7 +105,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                   .productModel?.data?[index].ratingsAverage
                                   ?.toDouble() ??
                               0.0,
-
                           height: height,
                           width: width,
                           description:

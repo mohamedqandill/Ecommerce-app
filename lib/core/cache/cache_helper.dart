@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper {
@@ -16,7 +18,8 @@ class CacheHelper {
      return await _preferences!.setString(key, value);
     } else if (value is int) {
      return await _preferences!.setInt(key, value);
-    } else if (value is bool) {
+    }
+    else if (value is bool) {
      return await _preferences!.setBool(key, value);
     } else if (value is double) {
       return await _preferences!.setDouble(key, value);

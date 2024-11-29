@@ -84,6 +84,7 @@ class ProfileTabState extends State<ProfileTab> {
                                       if (temp != null) {
                                         pickedImage = temp;
 
+
                                         setState(() {});
                                       }
                                     },
@@ -140,6 +141,7 @@ class ProfileTabState extends State<ProfileTab> {
                     backgroundImage:
                     pickedImage == null ? null : FileImage(pickedImage!),
                     radius: 70,
+
                     child: Column(
 
                       children: [
@@ -157,11 +159,11 @@ class ProfileTabState extends State<ProfileTab> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                             Icon(
+                            pickedImage == null? const Icon(
                               color: Colors.blueAccent,
                               Icons.camera_alt,
                               size: 25,
-                            ),
+                            ):SizedBox(),
                              InkWell(
                                onTap: () {
                                  pickedImage=null;
@@ -169,8 +171,8 @@ class ProfileTabState extends State<ProfileTab> {
 
                                  });
                                },
-                               child: pickedImage==null?SizedBox():Icon(
-                                color: Colors.blueAccent,
+                               child: pickedImage==null?const SizedBox(): const Icon(
+                                color: Colors.red,
                                 Icons.delete,
                                 size: 25,
                                                            ),

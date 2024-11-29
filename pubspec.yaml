@@ -18,6 +18,9 @@ dependencies:
   internet_connectivity_checker:
   custom_refresh_indicator:
   flutter_paypal_payment:
+  animated_text_kit:
+  custom_navigation_bar:
+  font_awesome_flutter:
   bloc:
   colornames:
   flutter_svg:

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../../../core/apis/api_manager.dart';
 import '../../../../core/resources/assets_manager.dart';
@@ -47,7 +48,20 @@ class ResetScreen extends StatelessWidget {
         listener: (context, state) {
 
           if (state.requestState == RequestState.error) {
-            print(state.errorMessage ?? "");
+            toastification.show(
+              context: context,
+              backgroundColor: Colors.red,
+              // optional if you use ToastificationWrapper
+              title: const Text(
+                "Please Enter a Valid Code",
+                style:  TextStyle(color: Colors.white),
+              ),
+              autoCloseDuration: const Duration(seconds: 4),
+            );
+          }
+          if (state.requestState == RequestState.success) {
+
+            Navigator.pushNamed(context, Routes.newRoute);
           }
         },
         builder: (context, state) {
@@ -114,7 +128,7 @@ class ResetScreen extends StatelessWidget {
                                 color: Colors.white, fontSize: AppSize.s20),
                             onTap: () {
                               bloc.add(ResetCodeEvent(bloc.resetCodeCotroller.text));
-                              Navigator.pushNamed(context, Routes.newRoute);
+
 
                             },
                           ),

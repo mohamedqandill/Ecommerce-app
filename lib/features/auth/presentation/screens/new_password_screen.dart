@@ -47,7 +47,31 @@ class NewPasswordScreen extends StatelessWidget {
       child: BlocConsumer<AuthBloc, AuthLoginState>(
         listener: (context, state) {
           if (state.requestState == RequestState.error) {
-            print(state.errorMessage ?? "");
+            toastification.show(
+              context: context,
+              backgroundColor: Colors.red,
+              // optional if you use ToastificationWrapper
+              title: const Text(
+                "Error, Try Again",
+                style:  TextStyle(color: Colors.white),
+              ),
+              autoCloseDuration: const Duration(seconds: 4),
+            );
+          }
+          if (state.requestState == RequestState.success) {
+
+            Navigator.pushNamed(context, Routes.signInRoute);
+            toastification.show(
+              context: context,
+              backgroundColor: Colors.white,
+              // optional if you use ToastificationWrapper
+              title:const Text(
+                "Password changed successfully",
+                style: const TextStyle(
+                    color: Colors.blue),
+              ),
+              autoCloseDuration: const Duration(seconds: 4),
+            );
           }
         },
         builder: (context, state) {
@@ -110,7 +134,7 @@ class NewPasswordScreen extends StatelessWidget {
 
                       BuildTextField(
                         controller: bloc.newPassCotroller,
-                        backgroundColor: Color(0xffF4F4F4),
+                        backgroundColor: const Color(0xffF4F4F4),
                         hint: 'Enter Password',
                         textInputType: TextInputType.name,
                         validation: AppValidators.validateFullName,
@@ -133,18 +157,8 @@ class NewPasswordScreen extends StatelessWidget {
                                   bloc.emailConfirmCotroller.text,
                                   bloc.newPassCotroller.text));
 
-                              Navigator.pushNamed(context, Routes.signInRoute);
-                              toastification.show(
-                                context: context,
-                                backgroundColor: Colors.white,
-                                // optional if you use ToastificationWrapper
-                                title: Text(
-                                  "Password changed successfully",
-                                  style: const TextStyle(
-                                      color: Colors.blue),
-                                ),
-                                autoCloseDuration: const Duration(seconds: 4),
-                              );
+
+
                             },
                           ),
                         ),

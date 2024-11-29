@@ -132,7 +132,7 @@ class ProductDetails extends StatelessWidget {
                             toastification.show(
                               context: context,
                               backgroundColor: Colors.white, // optional if you use ToastificationWrapper
-                              title:  Text("${state.addToCartModel?.message}",style:const TextStyle(color: Colors.lightBlueAccent),),
+                              title: const Text("Product Added Successfuly To Your Cart",style: const TextStyle(color: Colors.lightBlueAccent),),
                               autoCloseDuration: const Duration(seconds: 3),
                             );
                             BlocProvider.of<ProductDetailsBloc>(context)
