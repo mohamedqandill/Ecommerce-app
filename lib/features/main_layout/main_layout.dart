@@ -38,7 +38,7 @@ class _MainLayoutState extends State<MainLayout> {
         child: SizedBox(
           height: MediaQuery.of(context).size.height * 0.1,
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(15.0),
             child: CustomNavigationBar(
               currentIndex: currentIndex,
               bubbleCurve: Curves.fastEaseInToSlowEaseOut,
@@ -49,30 +49,35 @@ class _MainLayoutState extends State<MainLayout> {
               selectedColor: Colors.black,
               unSelectedColor: Colors.white,
               backgroundColor: Color(0xff8E6CEF),
+              
               onTap: (value) => changeSelectedIndex(value),
               // backgroundColor: ColorManager.primary,
               // type: BottomNavigationBarType.fixed,
               // selectedItemColor: ColorManager.primary,
               // unselectedItemColor: ColorManager.white,
-              // showSelectedLabels: false, // Hide selected item labels
               // showUnselectedLabels: false, // Hide unselected item labels
               items: [
+                
                 // Build BottomNavigationBarItem widgets for each tab
                 CustomNavigationBarItem(
                     icon: const Icon(Icons.home),
+                    selectedTitle:const Text("Home"),
                     title: const Text(
-                      "Home",
+                      "",
                       style: TextStyle(color: Colors.black),
                     )),
                 CustomNavigationBarItem(
+                  selectedTitle:const Text("Category"),
                     icon: const Icon(FontAwesomeIcons.list),
-                    title: const Text("Category", style: TextStyle(color: Colors.black))),
+                    title: const Text("", style: TextStyle(color: Colors.black))),
                 CustomNavigationBarItem(
+                  selectedTitle: const Text("Favourite"),
                     icon: const Icon(FontAwesomeIcons.heart),
-                    title: const Text("Favourite", style: TextStyle(color: Colors.black))),
+                    title: const Text("", style: TextStyle(color: Colors.black))),
                 CustomNavigationBarItem(
+                  selectedTitle: const Text("Profile"),
                     icon: const Icon(FontAwesomeIcons.user),
-                    title: const Text("Profile", style: TextStyle(color: Colors.black))),
+                    title: const Text("", style: TextStyle(color: Colors.black))),
                 // CustomNavigationBarItem(IconsAssets.icCategory, "Category"),
                 // CustomNavigationBarItem(IconsAssets.icWithList, "WishList"),
                 // CustomNavigationBarItem(IconsAssets.icProfile, "Profile"),

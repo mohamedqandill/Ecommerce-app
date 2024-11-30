@@ -13,7 +13,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/routes_manager/routes.dart';
 import '../../../../core/widget/main_text_field.dart';
-import '../../../../core/widget/validators.dart';
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
@@ -22,17 +21,17 @@ class ProfileTab extends StatefulWidget {
   ProfileTabState createState() => ProfileTabState();
 }
 
+File? pickedImage;
+
 class ProfileTabState extends State<ProfileTab> {
   bool isFullNameReadOnly = true;
   bool isEmailReadOnly = true;
   bool isPasswordReadOnly = true;
   bool isMobileNumberReadOnly = true;
   bool isAddressReadOnly = true;
-  File? pickedImage;
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: const EdgeInsets.all(AppPadding.p20),
       child: SafeArea(
@@ -40,22 +39,38 @@ class ProfileTabState extends State<ProfileTab> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               SizedBox(height: AppSize.s20.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Welcome, ${CacheHelper.getData<String>(
-                      "name")}',
+                    'Welcome, ${CacheHelper.getData<String>("name")}',
                     style: getSemiBoldStyle(
-                        color: ColorManager.primary, fontSize: FontSize.s18),
+                        color: ColorManager.purbble, fontSize: FontSize.s18),
                   ),
-                 InkWell(
-                     onTap: () {
-                       Navigator.pushNamed(context, Routes.signInRoute);
-                     },
-                     child: const Icon(Icons.login,size: 30,))
+                  InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, Routes.signInRoute);
+                        CacheHelper.removeData("token");
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "LogOut",
+                            style: getMediumStyle(color: Colors.red)
+                                .copyWith(fontSize: FontSize.s22),
+                          ),
+                          SizedBox(
+                            width: 5.w,
+                          ),
+                          const Icon(
+                            Icons.login,
+                            size: 30,
+                            color: Colors.red,
+                          ),
+                        ],
+                      ))
                 ],
               ),
               Text(
@@ -72,111 +87,117 @@ class ProfileTabState extends State<ProfileTab> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                            content:  SizedBox(
-                              width: 250,
-                              height: 90,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  InkWell(
-                                    onTap: () async {
-                                      File? temp = await ImageFunction.cameraPicker();
-                                      if (temp != null) {
-                                        pickedImage = temp;
+                            content: SizedBox(
+                          width: 250,
+                          height: 90,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              InkWell(
+                                onTap: () async {
+                                  File? temp =
+                                      await ImageFunction.cameraPicker();
+                                  if (temp != null) {
+                                    pickedImage = temp;
+                                    ImageFunction.saveImagePath(temp.path);
 
-
-                                        setState(() {});
-                                      }
-                                    },
-                                    child: const Column(
-                                      children: [
-                                        Icon(
-                                          Icons.camera,
-                                          size: 45,
-                                        ),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        Text(
-                                          "Camera",
-                                          style: TextStyle(
-                                              color: Colors.black, fontSize: 22),
-                                        )
-                                      ],
+                                    setState(() {});
+                                  }
+                                },
+                                child: const Column(
+                                  children: [
+                                    Icon(
+                                      Icons.camera,
+                                      size: 45,
                                     ),
-                                  ),
-                                  InkWell(
-                                    onTap: () async {
-                                      File? temp = await ImageFunction.galleryPicker();
-                                      if (temp != null) {
-                                        pickedImage = temp;
-
-                                        setState(() {});
-                                      }
-                                    },
-                                    child:const Column(
-                                      children: [
-                                        Icon(
-                                          Icons.photo,
-                                          size: 45,
-                                        ),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        Text(
-                                          "Gallery",
-                                          style: TextStyle(
-                                              color: Colors.black, fontSize: 22),
-                                        )
-                                      ],
+                                    SizedBox(
+                                      height: 8,
                                     ),
-                                  )
-                                ],
+                                    Text(
+                                      "Camera",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 22),
+                                    )
+                                  ],
+                                ),
                               ),
-                            ));
+                              InkWell(
+                                onTap: () async {
+                                  File? temp =
+                                      await ImageFunction.galleryPicker();
+                                  if (temp != null) {
+                                    pickedImage = temp;
+                                    ImageFunction.saveImagePath(temp.path);
+
+                                    setState(() {});
+                                  }
+                                },
+                                child: const Column(
+                                  children: [
+                                    Icon(
+                                      Icons.photo,
+                                      size: 45,
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      "Gallery",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 22),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ));
                       },
                     );
                   },
                   child: CircleAvatar(
                     backgroundImage:
-                    pickedImage == null ? null : FileImage(pickedImage!),
+                        pickedImage == null ? null : FileImage(pickedImage!),
                     radius: 70,
-
+                    backgroundColor: pickedImage != null
+                        ? Colors.transparent
+                        : Colors.grey.withOpacity(0.5),
                     child: Column(
-
                       children: [
                         const SizedBox(
                           height: 30,
                         ),
                         pickedImage == null
                             ? const Icon(
-                          Icons.person,
-                          color: Colors.blueAccent,
-                          size: 70,
-                        )
+                                Icons.person,
+                                color: Colors.black54,
+                                size: 70,
+                              )
                             : const SizedBox(),
                         pickedImage != null ? const Spacer() : const SizedBox(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            pickedImage == null? const Icon(
-                              color: Colors.blueAccent,
-                              Icons.camera_alt,
-                              size: 25,
-                            ):SizedBox(),
-                             InkWell(
-                               onTap: () {
-                                 pickedImage=null;
-                                 setState(() {
-
-                                 });
-                               },
-                               child: pickedImage==null?const SizedBox(): const Icon(
-                                color: Colors.red,
-                                Icons.delete,
-                                size: 25,
-                                                           ),
-                             ),
+                            pickedImage == null
+                                ? const Icon(
+                                    color: Colors.black54,
+                                    Icons.camera_alt,
+                                    size: 25,
+                                  )
+                                : const SizedBox(),
+                            InkWell(
+                              onTap: () {
+                                pickedImage = null;
+                                setState(() {});
+                              },
+                              child: pickedImage == null
+                                  ? const SizedBox()
+                                  : const Icon(
+                                      color: Colors.red,
+                                      Icons.delete,
+                                      size: 25,
+                                    ),
+                            ),
                           ],
                         ),
                       ],
@@ -190,10 +211,8 @@ class ProfileTabState extends State<ProfileTab> {
                 backgroundColor: ColorManager.white,
                 hint: 'Enter your full name',
                 label: 'Full Name',
-                controller:
-                TextEditingController(text: CacheHelper.getData<String>(
-                    "name")
-                ),
+                controller: TextEditingController(
+                    text: CacheHelper.getData<String>("name")),
                 labelTextStyle: getMediumStyle(
                     color: ColorManager.primary, fontSize: FontSize.s18),
                 suffixIcon: IconButton(
@@ -205,7 +224,6 @@ class ProfileTabState extends State<ProfileTab> {
                   },
                 ),
                 textInputType: TextInputType.text,
-                validation: AppValidators.validateFullName,
                 hintTextStyle: getRegularStyle(color: ColorManager.primary)
                     .copyWith(fontSize: 18.sp),
               ),
@@ -229,7 +247,6 @@ class ProfileTabState extends State<ProfileTab> {
                   },
                 ),
                 textInputType: TextInputType.emailAddress,
-                validation: AppValidators.validateEmail,
                 hintTextStyle: getRegularStyle(color: ColorManager.primary)
                     .copyWith(fontSize: 18.sp),
               ),
@@ -240,8 +257,8 @@ class ProfileTabState extends State<ProfileTab> {
                     isPasswordReadOnly = false;
                   });
                 },
-                controller: TextEditingController(text: CacheHelper.getData<String>(
-                    "password")),
+                controller: TextEditingController(
+                    text: CacheHelper.getData<String>("password")),
                 borderBackgroundColor: ColorManager.primary.withOpacity(.5),
                 readOnly: isPasswordReadOnly,
                 backgroundColor: ColorManager.white,
@@ -252,14 +269,13 @@ class ProfileTabState extends State<ProfileTab> {
                     color: ColorManager.primary, fontSize: FontSize.s18),
                 suffixIcon: SvgPicture.asset(SvgAssets.edit),
                 textInputType: TextInputType.text,
-                validation: AppValidators.validatePassword,
                 hintTextStyle: getRegularStyle(color: ColorManager.primary)
                     .copyWith(fontSize: 18.sp),
               ),
               SizedBox(height: AppSize.s18.h),
               BuildTextField(
-                controller: TextEditingController(text: CacheHelper.getData<String>(
-                    "phone")),
+                controller: TextEditingController(
+                    text: CacheHelper.getData<String>("phone")),
                 borderBackgroundColor: ColorManager.primary.withOpacity(.5),
                 readOnly: isMobileNumberReadOnly,
                 backgroundColor: ColorManager.white,
@@ -276,35 +292,34 @@ class ProfileTabState extends State<ProfileTab> {
                   },
                 ),
                 textInputType: TextInputType.phone,
-                validation: AppValidators.validatePhoneNumber,
                 hintTextStyle: getRegularStyle(color: ColorManager.primary)
                     .copyWith(fontSize: 18.sp),
               ),
               SizedBox(height: AppSize.s18.h),
-              BuildTextField(
-                controller:
-                TextEditingController(text: '6th October, street 11.....'),
-                borderBackgroundColor: ColorManager.primary.withOpacity(.5),
-                readOnly: isAddressReadOnly,
-                backgroundColor: ColorManager.white,
-                hint: '6th October, street 11.....',
-                label: 'Your Address',
-                labelTextStyle: getMediumStyle(
-                    color: ColorManager.primary, fontSize: FontSize.s18),
-                suffixIcon: IconButton(
-                  icon: SvgPicture.asset(SvgAssets.edit),
-                  onPressed: () {
-                    setState(() {
-                      isAddressReadOnly = false;
-                    });
-                  },
-                ),
-                textInputType: TextInputType.streetAddress,
-                validation: AppValidators.validateFullName,
-                hintTextStyle: getRegularStyle(color: ColorManager.primary)
-                    .copyWith(fontSize: 18.sp),
-              ),
-              SizedBox(height: AppSize.s50.h),
+              // BuildTextField(
+              //   controller:
+              //   TextEditingController(text: '6th October, street 11.....'),
+              //   borderBackgroundColor: ColorManager.primary.withOpacity(.5),
+              //   readOnly: isAddressReadOnly,
+              //   backgroundColor: ColorManager.white,
+              //   hint: '6th October, street 11.....',
+              //   label: 'Your Address',
+              //   labelTextStyle: getMediumStyle(
+              //       color: ColorManager.primary, fontSize: FontSize.s18),
+              //   suffixIcon: IconButton(
+              //     icon: SvgPicture.asset(SvgAssets.edit),
+              //     onPressed: () {
+              //       setState(() {
+              //         isAddressReadOnly = false;
+              //       });
+              //     },
+              //   ),
+              //   textInputType: TextInputType.streetAddress,
+              //
+              //   hintTextStyle: getRegularStyle(color: ColorManager.primary)
+              //       .copyWith(fontSize: 18.sp),
+              // ),
+              // SizedBox(height: AppSize.s50.h),
             ],
           ),
         ),

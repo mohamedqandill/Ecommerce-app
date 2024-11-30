@@ -111,7 +111,7 @@ class ResetScreen extends StatelessWidget {
                         backgroundColor: Color(0xffF4F4F4),
                         hint: 'Enter Code',
                         textInputType: TextInputType.name,
-                        validation: AppValidators.validateFullName,
+
                       ),
                       SizedBox(
                         height: 25.h,

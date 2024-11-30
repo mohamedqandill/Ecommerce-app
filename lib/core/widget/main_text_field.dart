@@ -47,7 +47,7 @@ class BuildTextField extends StatefulWidget {
   final int? maxLines;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final String? Function(String?)? validation;
+  final String?  validation;
   final void Function()? onTap;
 
   @override
@@ -114,7 +114,7 @@ class _BuildTextFieldState extends State<BuildTextField> {
                 });
               } else {
                 setState(() {
-                  errorText = widget.validation!(value);
+                  errorText = widget.validation!;
                 });
               }
               return errorText;

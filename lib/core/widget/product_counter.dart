@@ -27,7 +27,7 @@ class _ProductCounterState extends State<ProductCounter> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: ColorManager.primary,
+        color: ColorManager.purbble,
         borderRadius: BorderRadius.circular(24.r),
       ),
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 7.h),

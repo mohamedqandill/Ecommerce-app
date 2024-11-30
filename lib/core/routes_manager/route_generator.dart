@@ -11,6 +11,7 @@ import 'package:ecommerce_app/features/products_screen/presentation/screens/prod
 import 'package:flutter/material.dart';
 
 import '../../features/cart/presentation/screens/cart_screen.dart';
+import '../../features/splash_screen/splash_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -18,6 +19,8 @@ class RouteGenerator {
 
       case Routes.cartRoute:
         return MaterialPageRoute(builder: (_) =>  CartScreen());
+      case Routes.splash:
+        return MaterialPageRoute(builder: (_) =>  SplashScreen());
       case Routes.forgetRoute:
         return MaterialPageRoute(builder: (_) => ForgetScreen());
       case Routes.resetRoute:

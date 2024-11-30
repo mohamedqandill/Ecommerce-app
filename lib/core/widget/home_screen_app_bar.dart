@@ -17,13 +17,13 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       surfaceTintColor: Colors.white,
       automaticallyImplyLeading: automaticallyImplyLeading??false,
-      // title: SvgPicture.asset(
-      //   SvgAssets.routeLogo,
-      //   height: 25.h,
-      //   width: 25.w,
-      //   colorFilter:
-      //       const ColorFilter.mode(ColorManager.textColor, BlendMode.srcIn),
-      // ),
+      title: Image.asset(
+        "assets/images/Rectangle 13.png",
+        color: Color(0xff8E6CEF),
+        height: 40.h,
+        width: 90.w,
+
+      ),
       bottom: PreferredSize(
           preferredSize: const Size(AppSize.s100, AppSize.s60),
           child: Padding(

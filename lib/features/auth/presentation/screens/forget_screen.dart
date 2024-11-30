@@ -110,7 +110,7 @@ class ForgetScreen extends StatelessWidget {
                         backgroundColor: Color(0xffF4F4F4),
                         hint: 'Enter Email Address',
                         textInputType: TextInputType.name,
-                        validation: AppValidators.validateFullName,
+                        validation: AppValidators.validateEmail(bloc.emailConfirmCotroller.text),
                       ),
                       SizedBox(
                         height: 25.h,

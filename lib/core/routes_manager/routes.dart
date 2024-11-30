@@ -10,4 +10,5 @@ class Routes {
   static const String forgetRoute = "/forget";
   static const String resetRoute = "/return";
   static const String newRoute = "/new";
+  static const String splash = "/splash";
 }

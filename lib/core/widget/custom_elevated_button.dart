@@ -32,7 +32,7 @@ class CustomElevatedButton extends StatelessWidget {
               ? const StadiumBorder()
               : RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.r)),
-          backgroundColor: backgroundColor ?? ColorManager.primary,
+          backgroundColor: backgroundColor ?? ColorManager.purbble,
           padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 14.h),
         ),
         onPressed: onTap,

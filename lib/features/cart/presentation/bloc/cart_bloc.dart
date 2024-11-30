@@ -72,5 +72,56 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
         },
       );
-    });}
+    });
+    on<CheckOutEvent>((event,emit)async{
+
+
+      void excutePaypalNavigation(BuildContext context,
+          ({AmountModel amount, ItemListModel items}) transactionData) {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => PaypalCheckoutView(
+            sandboxMode: true,
+            clientId: ApisKeys.clientID,
+            secretKey: ApisKeys.secretKey,
+            transactions: [
+              {
+                "amount": transactionData.amount.toJson(),
+                "description": "The payment transaction description.",
+                "item_list": transactionData.items.toJson()
+              }
+            ],
+            note: "Contact us for any questions on your order.",
+            onSuccess: (Map params) async {
+              log("onSuccess: $params");
+              Navigator.pop(context);
+            },
+            onError: (error) {
+              log("onError: $error");
+              Navigator.pop(context);
+            },
+            onCancel: () {
+              print('cancelled:');
+              Navigator.pop(context);
+            },
+          ),
+        ));
+      }
+
+      ({AmountModel amount, ItemListModel items}) getTransactionData() {
+        var amount = AmountModel(
+            total: event.amount,
+            currency: "USD",
+            details:
+            Details(subtotal: event.amount, shipping: "0", shippingDiscount: 0));
+        List<OrderItemModel> orders =event.orders;
+        var itemsList = ItemListModel(orders: orders);
+        return (amount: amount, items: itemsList);
+      }
+      var transactionData = getTransactionData();
+
+      excutePaypalNavigation(event.context, transactionData);
+
+    });
+    },
+
     );}}

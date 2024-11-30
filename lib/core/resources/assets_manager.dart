@@ -29,6 +29,7 @@ class SvgAssets{
   static const String routeLogo = "$svgPath/route.svg";
   static const String eye = "$svgPath/Eye.svg";
   static const String edit = "$svgPath/edit (1) 5.svg";
+  static const String cIot = "$svgPath/Rectangle 13.svg";
 }
 
 abstract class IconsAssets {

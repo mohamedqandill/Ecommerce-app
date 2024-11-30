@@ -6,11 +6,13 @@ import 'package:ecommerce_app/core/resources/enums.dart';
 import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
 import 'package:ecommerce_app/di.dart';
+import 'package:ecommerce_app/features/cart/data/models/GetCartModel.dart';
 import 'package:ecommerce_app/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:ecommerce_app/features/main_layout/home/presentation/categories_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:injectable/injectable.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 
@@ -183,9 +185,37 @@ class _CartScreenState extends State<CartScreen> {
                           totalPrice:
                               state.getCartModel?.data?.totalCartPrice ?? 0,
                           checkoutButtonOnTap: () {
+                            int amount =
+                                state.getCartModel?.data?.totalCartPrice ?? 0;
+                            GetCartModel? cart = state.getCartModel;
+                            List<OrderItemModel> orders = [];
+                            for (int i = 0;
+                            i < cart!.data!.products!.length;
+                            i++) {
+                              orders.add(OrderItemModel(
+                                  name:
+                                  cart.data?.products?[i].product?.title ??
+                                      "",
+                                  quantity: cart.data?.products?[i].count ?? 0,
+                                  currency: "USD",
+                                  price: cart.data?.products?[i].price
+                                      .toString() ??
+                                      ""));
+                            }
+
+                            print(amount);
+                            print(order);
+                            print(cart);
+                            BlocProvider.of<CartBloc>(context).add(
+                                CheckOutEvent(
+                                    context, orders, amount.toString()));
 
 
-                          },
+                            }
+
+
+
+
                         ),
                         SizedBox(height: 10.h),
                       ],

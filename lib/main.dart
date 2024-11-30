@@ -37,7 +37,7 @@ class MainApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: child,
         onGenerateRoute: RouteGenerator.getRoute,
-        initialRoute: isLogged?Routes.mainRoute:Routes.signInRoute,
+        initialRoute:isLogged?Routes.mainRoute: Routes.splash,
       ),
     );
   }

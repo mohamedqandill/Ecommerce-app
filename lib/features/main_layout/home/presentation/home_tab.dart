@@ -127,7 +127,7 @@ class _HomeTabState extends State<HomeTab> {
                             ));
                           }),
                       SizedBox(
-                        height: 270.h,
+                        height: 290.h,
                         child: Skeletonizer(
                           enabled: isEnabled ? true : false,
                           child: GridView.builder(
@@ -190,7 +190,7 @@ class _HomeTabState extends State<HomeTab> {
                       //     ),
                       //   ),
                       // ),
-                      SizedBox(height: 12.h),
+                      // SizedBox(height: 12.h),
                     ],
                   )
                 ],

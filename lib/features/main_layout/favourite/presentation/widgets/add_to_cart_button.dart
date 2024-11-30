@@ -20,7 +20,7 @@ class AddToCartButton extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(AppSize.s14.r)),
               padding: EdgeInsets.symmetric(horizontal: AppSize.s1.w),
-              backgroundColor: ColorManager.primary),
+              backgroundColor: ColorManager.purbble),
           onPressed: onPressed,
           child: Text(text,
               style: getRegularStyle(

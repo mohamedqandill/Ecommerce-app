@@ -121,7 +121,7 @@ class NewPasswordScreen extends StatelessWidget {
                         backgroundColor: Color(0xffF4F4F4),
                         hint: 'Email Address',
                         textInputType: TextInputType.name,
-                        validation: AppValidators.validateFullName,
+                        validation: AppValidators.validateEmail(bloc.emailConfirmCotroller.text),
                       ),
                       SizedBox(
                         height: 20.sp,
@@ -137,7 +137,7 @@ class NewPasswordScreen extends StatelessWidget {
                         backgroundColor: const Color(0xffF4F4F4),
                         hint: 'Enter Password',
                         textInputType: TextInputType.name,
-                        validation: AppValidators.validateFullName,
+                        validation: AppValidators.validatePassword(bloc.newPassCotroller.text),
                       ),
                       SizedBox(
                         height: 25.h,

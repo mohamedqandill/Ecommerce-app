@@ -11,12 +11,17 @@ import 'package:ecommerce_app/features/main_layout/favourite/presentation/widget
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:toastification/toastification.dart';
 
+import '../../../../../core/resources/assets_manager.dart';
 import '../../../../product_details/presentation/bloc/product_details_bloc.dart';
 
 class FavoriteItem extends StatelessWidget {
-  FavoriteItem({required this.washListData, super.key,});
+  FavoriteItem({
+    required this.washListData,
+    super.key,
+  });
 
   WashListData? washListData;
 
@@ -24,7 +29,10 @@ class FavoriteItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, Routes.productDetails,);
+        Navigator.pushNamed(
+          context,
+          Routes.productDetails,
+        );
       },
       child: Container(
         height: AppSize.s135.h,
@@ -39,7 +47,7 @@ class FavoriteItem extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppSize.s16.r),
                   border:
-                  Border.all(color: ColorManager.primary.withOpacity(.6))),
+                      Border.all(color: ColorManager.primary.withOpacity(.6))),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppSize.s16.r),
                 child: CachedNetworkImage(
@@ -47,17 +55,15 @@ class FavoriteItem extends StatelessWidget {
                   height: AppSize.s135.h,
                   fit: BoxFit.cover,
                   imageUrl: washListData?.imageCover ?? "",
-                  placeholder: (context, url) =>
-                      Center(
-                        child: CircularProgressIndicator(
-                          color: ColorManager.primary,
-                        ),
-                      ),
-                  errorWidget: (context, url, error) =>
-                      Icon(
-                        Icons.error,
-                        color: ColorManager.primary,
-                      ),
+                  placeholder: (context, url) => Center(
+                    child: CircularProgressIndicator(
+                      color: ColorManager.purbble,
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => Icon(
+                    Icons.error,
+                    color: ColorManager.primary,
+                  ),
                 ),
               ),
             ),
@@ -66,7 +72,6 @@ class FavoriteItem extends StatelessWidget {
                     padding: EdgeInsets.only(left: AppSize.s8.w),
                     child: FavouriteItemDetails(
                       washListData: washListData,
-
                     ))),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -74,25 +79,31 @@ class FavoriteItem extends StatelessWidget {
               children: [
                 InkWell(
                     onTap: () {
-                      BlocProvider.of<WashListBloc>(context).add(
-                          DeleteWishListEvent(washListData?.id ?? ""));
-                      Future.delayed(const Duration(milliseconds: 800),() {
-                        BlocProvider.of<WashListBloc>(context).add(
-                            GetWashListEvent());
-                      },);
+                      BlocProvider.of<WashListBloc>(context)
+                          .add(DeleteWishListEvent(washListData?.id ?? ""));
+                      Future.delayed(
+                        const Duration(milliseconds: 800),
+                        () {
+                          BlocProvider.of<WashListBloc>(context)
+                              .add(GetWashListEvent());
+                        },
+                      );
                     },
-                    child: Icon(Icons.delete, size: 30,)),
+                  child: Image.asset(
+                    IconsAssets.icDelete,
+                    color: ColorManager.textColor,
+                    height: 22.h,
+                  ),),
                 SizedBox(height: AppSize.s14.h),
                 AddToCartButton(
                   text: AppConstants.addToCart,
                   onPressed: () {
                     toastification.show(
                       context: context,
-                      backgroundColor: Colors
-                          .blueAccent,
+                      backgroundColor: ColorManager.purbble,
                       // optional if you use ToastificationWrapper
-                      title: const Text(
-                          'Product added successfully to your cart'),
+                      title:
+                          const Text('Product added successfully to your cart'),
                       autoCloseDuration: const Duration(seconds: 3),
                     );
                     BlocProvider.of<WashListBloc>(context)
