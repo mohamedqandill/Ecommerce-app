@@ -29,10 +29,15 @@ class _HeartButtonState extends State<HeartButton> {
       onTap: () {
         toastification.show(
           context: context,
-          backgroundColor:
-              Colors.white, // optional if you use ToastificationWrapper
-          title: const Text('Product added successfully to your wishlist',style:  TextStyle(color: Colors.blueAccent),),
-          autoCloseDuration: const Duration(seconds: 3),
+          backgroundColor: Color(0xff8E6CEF),
+          // optional if you use ToastificationWrapper
+          title: const Text(
+            "Product Added Successfully To Your WishList",
+            style:  TextStyle(
+                color: Colors.white),
+          ),
+          autoCloseDuration:
+          const Duration(seconds: 3),
         );
         BlocProvider.of<ProductDetailsBloc>(context)
             .add(AddToWashEvent(widget.productModel?.id ?? ""));

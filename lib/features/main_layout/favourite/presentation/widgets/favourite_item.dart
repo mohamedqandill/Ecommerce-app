@@ -100,11 +100,15 @@ class FavoriteItem extends StatelessWidget {
                   onPressed: () {
                     toastification.show(
                       context: context,
-                      backgroundColor: ColorManager.purbble,
+                      backgroundColor: Color(0xff8E6CEF),
                       // optional if you use ToastificationWrapper
-                      title:
-                          const Text('Product added successfully to your cart'),
-                      autoCloseDuration: const Duration(seconds: 3),
+                      title: const Text(
+                        "Product Added Successfully To Your Cart",
+                        style:  TextStyle(
+                            color: Colors.white),
+                      ),
+                      autoCloseDuration:
+                      const Duration(seconds: 3),
                     );
                     BlocProvider.of<WashListBloc>(context)
                         .add(AddToCartsEvent(washListData?.id ?? ""));

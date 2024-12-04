@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../../../core/apis/keys/keys.dart';
 import '../../data/models/amount_model.dart';
@@ -94,6 +95,18 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             onSuccess: (Map params) async {
               log("onSuccess: $params");
               Navigator.pop(context);
+              toastification.show(
+                context: context,
+                backgroundColor: Color(0xff8E6CEF),
+                // optional if you use ToastificationWrapper
+                title: const Text(
+                  "Successful Payment",
+                  style:  TextStyle(
+                      color: Colors.white),
+                ),
+                autoCloseDuration:
+                const Duration(seconds: 3),
+              );
             },
             onError: (error) {
               log("onError: $error");

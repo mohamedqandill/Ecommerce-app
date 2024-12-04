@@ -52,27 +52,18 @@ class SignInScreen extends StatelessWidget {
                 context, Routes.mainRoute, (r) => false);
             toastification.show(
               context: context,
-
-              backgroundColor: Colors.white,
+              backgroundColor: Color(0xff8E6CEF),
               // optional if you use ToastificationWrapper
               title: const Text(
                 "Welcome Back",
-                style: TextStyle(color: Colors.blue),
+                style:  TextStyle(
+                    color: Colors.white),
               ),
-              autoCloseDuration: const Duration(seconds: 6),
+              autoCloseDuration:
+              const Duration(seconds: 3),
             );
           }
-          if (state.requestState == RequestState.error) {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: Text("Error"),
-                  content: Text(state.errorMessage ?? ""),
-                );
-              },
-            );
-          }
+
         },
         builder: (context, state) {
           var bloc = BlocProvider.of<AuthBloc>(context);
@@ -173,7 +164,7 @@ class SignInScreen extends StatelessWidget {
                                     // optional if you use ToastificationWrapper
                                     title: const Text(
                                       "Invalid Email or Password",
-                                      style: TextStyle(color: Colors.black),
+                                      style: TextStyle(color: Colors.white),
                                     ),
                                     autoCloseDuration:
                                         const Duration(seconds: 4),

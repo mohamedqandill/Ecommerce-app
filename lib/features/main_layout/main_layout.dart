@@ -49,7 +49,7 @@ class _MainLayoutState extends State<MainLayout> {
               selectedColor: Colors.black,
               unSelectedColor: Colors.white,
               backgroundColor: Color(0xff8E6CEF),
-              
+
               onTap: (value) => changeSelectedIndex(value),
               // backgroundColor: ColorManager.primary,
               // type: BottomNavigationBarType.fixed,
@@ -57,27 +57,43 @@ class _MainLayoutState extends State<MainLayout> {
               // unselectedItemColor: ColorManager.white,
               // showUnselectedLabels: false, // Hide unselected item labels
               items: [
-                
                 // Build BottomNavigationBarItem widgets for each tab
                 CustomNavigationBarItem(
                     icon: const Icon(Icons.home),
-                    selectedTitle:const Text("Home"),
+                    selectedTitle: const Text("Home",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14)),
                     title: const Text(
                       "",
-                      style: TextStyle(color: Colors.black),
                     )),
                 CustomNavigationBarItem(
-                  selectedTitle:const Text("Category"),
+                    selectedTitle: const Text("Category",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14)),
                     icon: const Icon(FontAwesomeIcons.list),
-                    title: const Text("", style: TextStyle(color: Colors.black))),
+                    title: const Text("")),
                 CustomNavigationBarItem(
-                  selectedTitle: const Text("Favourite"),
+                    selectedTitle: const Text("Favourite",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14)),
                     icon: const Icon(FontAwesomeIcons.heart),
-                    title: const Text("", style: TextStyle(color: Colors.black))),
+                    title: const Text("")),
                 CustomNavigationBarItem(
-                  selectedTitle: const Text("Profile"),
+                    selectedTitle: const Text("Profile",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14)),
                     icon: const Icon(FontAwesomeIcons.user),
-                    title: const Text("", style: TextStyle(color: Colors.black))),
+                    title: const Text(
+                      "",
+                    )),
                 // CustomNavigationBarItem(IconsAssets.icCategory, "Category"),
                 // CustomNavigationBarItem(IconsAssets.icWithList, "WishList"),
                 // CustomNavigationBarItem(IconsAssets.icProfile, "Profile"),

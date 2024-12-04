@@ -63,10 +63,11 @@ class CustomProductWidget extends StatelessWidget {
         },
         builder: (context, state) {
           return InkWell(
-            onTap: () =>
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ProductDetails(productModel: productModel!);
-                },)),
+            onTap: () => Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return ProductDetails(productModel: productModel!);
+              },
+            )),
             child: Container(
               width: width * 0.4,
               height: height * 0.8,
@@ -102,7 +103,7 @@ class CustomProductWidget extends StatelessWidget {
                         // ),
                         ClipRRect(
                           borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(14.r)),
+                              BorderRadius.vertical(top: Radius.circular(14.r)),
                           child: Image.network(
                             image,
                             fit: BoxFit.cover,
@@ -113,7 +114,8 @@ class CustomProductWidget extends StatelessWidget {
                             top: height * 0.01,
                             right: width * 0.02,
                             child: HeartButton(onTap: () {
-                              BlocProvider.of<ProductDetailsBloc>(context).add(AddToWashEvent(productModel?.id??""));
+                              BlocProvider.of<ProductDetailsBloc>(context)
+                                  .add(AddToWashEvent(productModel?.id ?? ""));
                             })),
                       ],
                     ),
@@ -153,7 +155,6 @@ class CustomProductWidget extends StatelessWidget {
                                     fontSize: 14.sp,
                                   ),
                                 ),
-
                               ],
                             ),
                           ),
@@ -164,8 +165,8 @@ class CustomProductWidget extends StatelessWidget {
                               SizedBox(
                                 // width: width * 0.22,
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "Review ($rating)",
@@ -188,13 +189,19 @@ class CustomProductWidget extends StatelessWidget {
                                   onTap: () {
                                     toastification.show(
                                       context: context,
-                                      backgroundColor: Colors.white, // optional if you use ToastificationWrapper
-                                      title:  Text("Product Added Successfuly To Your Cart",style: const TextStyle(color: Colors.lightBlueAccent),),
-                                      autoCloseDuration: const Duration(seconds: 3),
+                                      backgroundColor: Color(0xff8E6CEF),
+                                      // optional if you use ToastificationWrapper
+                                      title: const Text(
+                                        "Product Added Successfully To Your Cart",
+                                        style:  TextStyle(
+                                            color: Colors.white),
+                                      ),
+                                      autoCloseDuration:
+                                          const Duration(seconds: 3),
                                     );
                                     BlocProvider.of<ProductDetailsBloc>(context)
-                                        .add(
-                                        AddToCartEvent(productModel?.id ?? ""));
+                                        .add(AddToCartEvent(
+                                            productModel?.id ?? ""));
                                   },
                                   child: Container(
                                     height: height * 0.036,

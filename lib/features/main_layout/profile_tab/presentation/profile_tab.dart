@@ -48,29 +48,33 @@ class ProfileTabState extends State<ProfileTab> {
                     style: getSemiBoldStyle(
                         color: ColorManager.purbble, fontSize: FontSize.s18),
                   ),
-                  InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, Routes.signInRoute);
-                        CacheHelper.removeData("token");
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "LogOut",
-                            style: getMediumStyle(color: Colors.red)
-                                .copyWith(fontSize: FontSize.s22),
-                          ),
-                          SizedBox(
-                            width: 5.w,
-                          ),
-                          const Icon(
-                            Icons.login,
-                            size: 30,
-                            color: Colors.red,
-                          ),
-                        ],
-                      ))
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+
+
+                      ),
+                      onPressed: () {
+                    Navigator.pushNamed(context, Routes.signInRoute);
+                    CacheHelper.removeData("token");
+                  }, child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Log out",
+                        style: getMediumStyle(color: Colors.black)
+                            .copyWith(fontSize: FontSize.s22),
+                      ),
+                      SizedBox(
+                        width: 5.w,
+                      ),
+                      const Icon(
+                        Icons.login,
+                        size: 30,
+                        color: Colors.black,
+                      ),
+                    ],
+                  )),
                 ],
               ),
               Text(
