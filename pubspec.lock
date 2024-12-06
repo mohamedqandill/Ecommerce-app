@@ -231,7 +231,7 @@ packages:
     source: hosted
     version: "0.1.0"
   connectivity_plus:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: connectivity_plus
       sha256: "876849631b0c7dc20f8b471a2a03142841b482438e3b707955464f5ffca3e4c3"
@@ -701,22 +701,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.2"
-  internet_connection_checker_plus:
-    dependency: "direct main"
-    description:
-      name: internet_connection_checker_plus
-      sha256: "95da3194bdb98cb606b921f0e0007cbe55c32d6a7fa92d5debe59ef4183ce2a6"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.5.2"
-  internet_connectivity_checker:
-    dependency: "direct main"
-    description:
-      name: internet_connectivity_checker
-      sha256: "31e46afc7bcb616dfdd44ad8731fee003a1eb1b3dcc12202984ef5f91886771e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
   io:
     dependency: transitive
     description:

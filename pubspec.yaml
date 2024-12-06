@@ -14,8 +14,7 @@ dependencies:
   flutter_screenutil:
   flutter_slidable:
   auto_size_text:
-  internet_connection_checker_plus:
-  internet_connectivity_checker:
+  connectivity_plus:
   custom_refresh_indicator:
   flutter_paypal_payment:
   animated_text_kit:

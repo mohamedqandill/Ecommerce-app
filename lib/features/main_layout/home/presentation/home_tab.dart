@@ -11,8 +11,6 @@ import 'package:ecommerce_app/features/main_layout/home/presentation/widgets/cus
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
-import 'package:internet_connectivity_checker/internet_connectivity_checker.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/resources/assets_manager.dart';
